@@ -9,5 +9,5 @@ export default defineNuxtConfig({
   image: { format: ['webp'], quality: 80 },
   runtimeConfig: { public: { siteUrl: '' } },
   nitro: { prerender: { routes: ['/', '/experience', '/stack', '/about', '/contact', '/resume'] } },
-  app: { head: { htmlAttrs: { lang: 'en' }, link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }], meta: [{ name: 'theme-color', content: '#101211' }] } }
+  app: { head: { htmlAttrs: { lang: 'en' }, meta: [{ name: 'theme-color', content: '#101211' }] } }
 })

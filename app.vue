@@ -14,9 +14,13 @@ const descriptions: Record<string, string> = {
 const title = computed(() => `Muhamad Fajar — ${titles[route.path] || 'Portfolio'}`)
 const description = computed(() => descriptions[route.path] || descriptions['/'])
 const siteUrl = String(config.public.siteUrl).replace(/\/$/, '')
+const baseUrl = String(config.app.baseURL).replace(/\/?$/, '/')
 useSeoMeta({ title, description, ogTitle: title, ogDescription: description, ogType: 'website', ogLocale: 'en_US', twitterCard: 'summary_large_image', ogImage: siteUrl ? `${siteUrl}/images/gagaaaa.webp` : undefined, twitterImage: siteUrl ? `${siteUrl}/images/gagaaaa.webp` : undefined })
 useHead(() => ({
-  link: siteUrl ? [{ rel: 'canonical', href: `${siteUrl}${route.path}` }] : [],
+  link: [
+    { rel: 'icon', type: 'image/x-icon', href: `${baseUrl}favicon.ico?v=2` },
+    ...(siteUrl ? [{ rel: 'canonical', href: `${siteUrl}${route.path}` }] : [])
+  ],
   script: [{ type: 'application/ld+json', innerHTML: JSON.stringify({
     '@context': 'https://schema.org', '@type': 'Person', name: 'Muhamad Fajar', jobTitle: 'Web App Developer', description: data.hero.bio,
     ...(siteUrl ? { url: siteUrl, image: `${siteUrl}/images/gagaaaa.webp` } : {}),
