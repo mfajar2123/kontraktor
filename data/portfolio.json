@@ -43,9 +43,12 @@
         "role": "Web App Developer",
         "company": "PT Imani Prima",
         "duration": "9 months",
-        "location": "South Jakarta",
+        "location": "South Jakarta, Jakarta, Indonesia",
         "details": [
-          "Building and maintaining web applications."
+          "Managed and maintained 15+ production websites, primarily WordPress, resolving critical issues across functionality, plugins, email delivery, access, performance, and website availability.",
+          "Developed and maintained Nuxt-based company profile website with Decap CMS + GitHub Actions, enabling automated content publishing for articles, brochures, and job vacancies.",
+          "Built an automated recruitment workflow and Google Analytics integration, enabling job applications with PDF/CV attachments sent directly to HR email while providing website traffic and user behavior insights.",
+          "Resolved critical security and incidents, including WordPress compromises, malicious backdoors, SEO spam, database cleanup, Nginx issues, and SSL renewal—restoring affected services and improving production stability."
         ]
       },
       {
@@ -55,7 +58,7 @@
         "duration": "4 months",
         "location": "South Jakarta, Jakarta, Indonesia",
         "details": [
-          "Developed practical skills across backend services and frontend interfaces."
+          "Developed practical skills across backend services, frontend interfaces, and deployment."
         ]
       },
       {

@@ -1,1 +1,26 @@
-<template><section class="contact-cta shell" aria-labelledby="contact-cta-title"><p class="eyebrow">LET’S WORK TOGETHER</p><h2 id="contact-cta-title">Have a project in mind?<br><span class="muted-heading">Let’s make it happen.</span></h2><p>Discuss an idea, a technical challenge, or a role on your team.</p><div class="actions"><UButton to="/contact" size="xl" label="Start a conversation" trailing-icon="i-lucide-arrow-up-right" /><UButton to="/resume" size="xl" color="neutral" variant="ghost" label="View résumé" trailing-icon="i-lucide-file-text" /></div></section></template>
+<template>
+  <section class="contact-cta shell" aria-labelledby="contact-cta-title">
+    <p class="eyebrow">LET’S WORK TOGETHER</p>
+    <h2 id="contact-cta-title">
+      Have a project in mind?<br /><span class="muted-heading"
+        >Let’s make it happen.</span
+      >
+    </h2>
+    <p>Discuss an idea, a technical challenge, or a role on your team.</p>
+    <div class="actions">
+      <UButton
+        to="/contact"
+        size="xl"
+        label="Start a conversation"
+        trailing-icon="i-lucide-arrow-up-right"
+      /><UButton
+        to="/resume"
+        size="xl"
+        color="neutral"
+        variant="ghost"
+        label="View résumé"
+        trailing-icon="i-lucide-file-text"
+      />
+    </div>
+  </section>
+</template>
