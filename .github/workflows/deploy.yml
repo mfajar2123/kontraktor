@@ -41,8 +41,8 @@ jobs:
 
       - name: Build static website
         env:
-          NUXT_APP_BASE_URL: /portofolio-web/
-          NUXT_PUBLIC_SITE_URL: https://mfajar2123.github.io/portofolio-web
+          NUXT_APP_BASE_URL: /
+          NUXT_PUBLIC_SITE_URL: https://mfajar2123.tech
         run: pnpm exec nuxt build --preset github_pages
 
       - name: Configure GitHub Pages
