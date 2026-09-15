@@ -45,7 +45,7 @@ h2 { font-size: clamp(2rem, 3.1vw, 2.8rem); }
 h3 { font-size: 1.4rem; letter-spacing: -.025em; }
 .muted-heading { color: var(--ui-text-muted); }
 .accent { color: var(--ui-primary); }
-.hero { min-height: 720px; padding-block: 6rem 5rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; }
+.hero { min-height: 720px; padding-block: 3rem 5rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; }
 .hero h1 { letter-spacing: -.065em; line-height: 1.04; }
 .hero-intro { color: var(--ui-text-muted); font-size: 17px; max-width: 450px; margin-top: 1.8rem; }
 .hero-intro strong { color: var(--ui-text); font-weight: 500; }
@@ -159,7 +159,7 @@ h3 { font-size: 1.4rem; letter-spacing: -.025em; }
   @keyframes settle-in { from { transform: translateY(12px); } to { transform: translateY(0); } }
 }
 @media (max-width: 1023px) {
-  .hero { gap: 2rem; min-height: auto; padding-block: 4rem; }
+  .hero { gap: 2rem; min-height: auto; padding-block: 2.5rem 4rem; }
   .hero h1 { font-size: clamp(3rem, 6.4vw, 4.5rem); }
   .hero-visual { padding: 1rem; }
   .work-preview, .about-grid, .contact-grid { gap: 2.5rem; }
@@ -169,7 +169,7 @@ h3 { font-size: 1.4rem; letter-spacing: -.025em; }
 @media (max-width: 767px) {
   :root { --ui-header-height: 4.25rem; }
   .shell { width: min(100% - 2.5rem, 72rem); }
-  .hero { grid-template-columns: 1fr; gap: 2rem; padding-top: 3rem; }
+  .hero { grid-template-columns: 1fr; gap: 2rem; padding-top: 2rem; }
   .hero h1 { font-size: clamp(3.1rem, 11.6vw, 4.8rem); }
   .hero-intro { font-size: 16px; }
   .hero-visual { width: min(100% - 1.5rem, 380px); margin-inline: auto; }
