@@ -1,39 +1,28 @@
-<template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
-</template>
-
-<script setup>
-import portfolioData from '~/data/portfolio.json'
-
-const title = `${portfolioData.hero.firstName} ${portfolioData.hero.lastName} - ${portfolioData.hero.roles[1]}`
-const description = portfolioData.hero.bio
-const image = portfolioData.hero.image
-
-useSeoMeta({
-  title: title,
-  ogTitle: title,
-  description: description,
-  ogDescription: description,
-  ogImage: image,
-  twitterCard: 'summary_large_image',
-  twitterTitle: title,
-  twitterDescription: description,
-  twitterImage: image,
-  themeColor: '#0a0a0a'
-})
-
-useHead({
-  htmlAttrs: {
-    lang: 'en'
-  },
-  meta: [
-    { name: 'author', content: `${portfolioData.hero.firstName} ${portfolioData.hero.lastName}` },
-    { name: 'keywords', content: 'Portfolio, Muhamad Fajar, Web App Developer, Computer Engineering, Vue, Nuxt 3' }
-  ],
-  link: [
-    { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap' }
-  ]
-})
+<script setup lang="ts">
+import data from '~/data/portfolio.json'
+const route = useRoute()
+const config = useRuntimeConfig()
+const titles: Record<string, string> = { '/': 'Full Stack Developer', '/experience': 'Experience', '/stack': 'Technologies & Tools', '/about': 'About & Education', '/contact': 'Contact', '/resume': 'Résumé' }
+const descriptions: Record<string, string> = {
+  '/': 'Muhamad Fajar builds modern web applications, REST APIs, and deployment workflows. Explore his experience, skills, and ways to work together.',
+  '/experience': 'Explore Muhamad Fajar’s web development experience at PT Imani Prima, Soca AI, and Metrodata Academy.',
+  '/stack': 'Explore the backend, frontend, and DevOps tools Muhamad Fajar uses to build and deliver web applications.',
+  '/about': 'Meet Muhamad Fajar, a Computer Engineering graduate based in Sukabumi, Indonesia. View education and professional certifications.',
+  '/contact': 'Discuss a web development project or hiring opportunity with Muhamad Fajar by email, WhatsApp, or LinkedIn.',
+  '/resume': 'View and print Muhamad Fajar’s résumé, including work experience, technical skills, education, and certifications.'
+}
+const title = computed(() => `Muhamad Fajar — ${titles[route.path] || 'Portfolio'}`)
+const description = computed(() => descriptions[route.path] || descriptions['/'])
+const siteUrl = String(config.public.siteUrl).replace(/\/$/, '')
+useSeoMeta({ title, description, ogTitle: title, ogDescription: description, ogType: 'website', ogLocale: 'en_US', twitterCard: 'summary_large_image', ogImage: siteUrl ? `${siteUrl}/images/gagaaaa.webp` : undefined, twitterImage: siteUrl ? `${siteUrl}/images/gagaaaa.webp` : undefined })
+useHead(() => ({
+  link: siteUrl ? [{ rel: 'canonical', href: `${siteUrl}${route.path}` }] : [],
+  script: [{ type: 'application/ld+json', innerHTML: JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'Person', name: 'Muhamad Fajar', jobTitle: 'Web App Developer', description: data.hero.bio,
+    ...(siteUrl ? { url: siteUrl, image: `${siteUrl}/images/gagaaaa.webp` } : {}),
+    sameAs: ['https://github.com/mfajar2123', 'https://linkedin.com/in/mfajar2123'],
+    alumniOf: { '@type': 'CollegeOrUniversity', name: data.education.items[0].school }
+  }).replace(/</g, '\\u003c') }]
+}))
 </script>
+<template><UApp><NuxtLayout><NuxtPage /></NuxtLayout></UApp></template>

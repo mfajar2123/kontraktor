@@ -7,7 +7,7 @@
       "Computer Engineering",
       "Web App Developer"
     ],
-    "bio": "I am a Computer Engineering graduate specializing in Fullstack Development and DevOps. I build scalable RESTful APIs and modern UIs, with a focus on CI/CD, containerization, and cloud infrastructure for seamless software delivery.",
+    "bio": "Computer Engineering graduate and Web App Developer focused on full stack development and DevOps. I build web interfaces, REST APIs, and deployment workflows using modern frontend, backend, and cloud tools.",
     "location": "Sukabumi, West Java, Indonesia",
     "contacts": [
       {
@@ -31,7 +31,7 @@
         "icon": "code"
       }
     ],
-    "image": "images/gagaaaa.webp"
+    "image": "/images/gagaaaa.webp"
   },
   "experience": {
     "title": "Professional",
@@ -55,7 +55,7 @@
         "duration": "4 months",
         "location": "South Jakarta, Jakarta, Indonesia",
         "details": [
-          "Developed core competencies in backend and frontend stack."
+          "Developed practical skills across backend services and frontend interfaces."
         ]
       },
       {
@@ -128,7 +128,7 @@
           "Kubernetes",
           "Azure",
           "Digital Ocean",
-          "Github Action"
+          "GitHub Actions"
         ]
       },
       {
@@ -138,7 +138,7 @@
         "items": [
           "WordPress",
           "Troubleshooting",
-          "Graphic Designer"
+          "Graphic Design"
         ]
       }
     ]
