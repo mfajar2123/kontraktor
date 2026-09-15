@@ -1,5 +1,6 @@
 <template>
   <section class="hero shell" aria-labelledby="hero-title">
+    <HeroParticles />
     <div class="hero-copy">
       <h1 id="hero-title">
         From idea to<br />interface.<br /><span class="muted-heading"
@@ -59,3 +60,7 @@
     </div>
   </section>
 </template>
+
+<style scoped>
+.hero { position: relative; isolation: isolate; }
+</style>
