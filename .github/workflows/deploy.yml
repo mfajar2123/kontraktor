@@ -42,7 +42,9 @@ jobs:
       - name: Build static website
         env:
           NUXT_APP_BASE_URL: /
-          NUXT_PUBLIC_SITE_URL: https://mfajar2123.tech
+          NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
+          NUXT_PUBLIC_CONTACT_EMAIL: ${{ vars.NUXT_PUBLIC_CONTACT_EMAIL }}
+          NUXT_PUBLIC_WHATSAPP: ${{ vars.NUXT_PUBLIC_WHATSAPP }}
         run: pnpm exec nuxt build --preset github_pages
 
       - name: Configure GitHub Pages

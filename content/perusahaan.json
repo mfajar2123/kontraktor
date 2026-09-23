@@ -1,0 +1,69 @@
+{
+  "name": "PT Alpha Tunas Mandiri",
+  "tagline": "Fondasi kuat.\nMasa depan hebat.",
+  "intro": "Mitra konstruksi untuk mewujudkan ruang yang fungsional, bernilai, dan siap tumbuh bersama visi Anda.",
+  "location": "Sukabumi, Jawa Barat",
+  "hours": "Senin–Jumat, 08.00–17.00 WIB",
+  "steps": [
+    {
+      "title": "Dengarkan & pahami",
+      "description": "Diskusi kebutuhan, tujuan penggunaan, lokasi, serta gambaran anggaran proyek Anda."
+    },
+    {
+      "title": "Rencanakan dengan rinci",
+      "description": "Survei, pengembangan desain, lingkup pekerjaan, dan rencana biaya yang dapat ditinjau bersama."
+    },
+    {
+      "title": "Bangun dengan terarah",
+      "description": "Pelaksanaan bertahap dengan koordinasi lapangan, pengendalian mutu, dan laporan perkembangan."
+    },
+    {
+      "title": "Serahkan dengan tuntas",
+      "description": "Pemeriksaan hasil, penyelesaian catatan pekerjaan, dan serah terima sesuai kesepakatan."
+    }
+  ],
+  "faq": [
+    {
+      "label": "Apa saja layanan yang tersedia?",
+      "content": "Kami menyiapkan solusi konstruksi gedung, renovasi dan interior, perencanaan dan desain, serta pekerjaan infrastruktur dan sipil. Lingkup akhir disesuaikan dengan kebutuhan dan hasil peninjauan proyek."
+    },
+    {
+      "label": "Bagaimana cara memulai kerja sama?",
+      "content": "Hubungi tim melalui formulir email atau pilih Admin 1 atau Admin 2 pada tombol WhatsApp di halaman Kontak. Sampaikan lokasi, jenis bangunan, dan kebutuhan awal agar diskusi lebih terarah."
+    },
+    {
+      "label": "Apakah saya harus sudah memiliki desain?",
+      "content": "Tidak. Kebutuhan dapat dimulai dari gagasan awal atau gambar yang sudah tersedia. Tahap perencanaan membantu memperjelas kebutuhan, alternatif desain, dan batasan pekerjaan."
+    },
+    {
+      "label": "Bagaimana biaya dan jadwal ditentukan?",
+      "content": "Biaya dan jadwal disusun setelah lingkup, kondisi lapangan, spesifikasi material, dan metode pelaksanaan ditinjau. Penawaran serta perubahan pekerjaan perlu disepakati secara tertulis."
+    },
+    {
+      "label": "Apakah proyek di galeri merupakan proyek perusahaan?",
+      "content": "Galeri saat ini berisi contoh proyek dan foto ilustrasi untuk memperlihatkan bentuk penyajian portofolio. Data proyek aktual akan ditambahkan setelah tersedia."
+    },
+    {
+      "label": "Apakah ada masa pemeliharaan?",
+      "content": "Ketentuan pemeliharaan, cakupan perbaikan, dan prosedur pelaporan ditetapkan dalam perjanjian proyek. Rincian tersebut dibahas sebelum pelaksanaan dimulai."
+    }
+  ],
+  "contact": {
+    "email": "halo@alphatunasmandiri.example",
+    "phone": "+62 812-0000-0001",
+    "address": "Jl. Suryakencana No. 18, Cikole, Kota Sukabumi, Jawa Barat 43113",
+    "mapQuery": "-6.9210,106.9270",
+    "admins": [
+      {
+        "name": "Admin 1",
+        "role": "Konsultasi & penawaran",
+        "phone": "6281200000001"
+      },
+      {
+        "name": "Admin 2",
+        "role": "Informasi & kerja sama",
+        "phone": "6281200000002"
+      }
+    ]
+  }
+}

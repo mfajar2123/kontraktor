@@ -1,24 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
 const open = ref(false)
-const items = computed(() => [
-  { label: 'Overview', to: '/', active: route.path === '/' },
-  { label: 'Experience', to: '/experience', active: route.path === '/experience' },
-  { label: 'Stack', to: '/stack', active: route.path === '/stack' },
-  { label: 'About', to: '/about', active: route.path === '/about' }
-])
+const items = computed(() => [{ label: 'Beranda', to: '/', active: route.path === '/' }, { label: 'Tentang Kami', to: '/tentang-kami' }, { label: 'Layanan & Jasa', to: '/layanan' }, { label: 'Galeri', to: '/galeri', active: route.path.startsWith('/galeri') || route.path.startsWith('/proyek') }, { label: 'Artikel', to: '/artikel' }, { label: 'Kontak', to: '/kontak' }])
 watch(() => route.fullPath, () => { open.value = false })
 </script>
-<template>
-  <div>
-    <a href="#main-content" class="skip-link">Skip to content</a>
-    <UHeader v-model:open="open" class="site-header">
-      <template #title><span class="brand-mark" aria-hidden="true">f.</span><span class="brand-name">fajar<span class="text-muted"> / developer</span></span></template>
-      <UNavigationMenu :items="items" aria-label="Main navigation" />
-      <template #right><UButton to="/contact" color="neutral" variant="outline" class="nav-contact" label="Let’s talk" trailing-icon="i-lucide-arrow-up-right" /></template>
-      <template #body><UNavigationMenu :items="items" orientation="vertical" aria-label="Mobile navigation" /><div class="mobile-extra"><UButton to="/contact" block label="Let’s work together" /><UButton to="/resume" block color="neutral" variant="ghost" label="View résumé" /><p class="text-muted">Based in Indonesia · UTC+7</p></div></template>
-    </UHeader>
-    <main id="main-content" tabindex="-1"><slot /></main>
-    <AppFooter />
-  </div>
-</template>
+<template><div><a class="skip-link" href="#main-content">Lewati ke konten</a><div class="topbar"><div class="shell"><span>Konstruksi terencana. Hasil bermakna.</span><span>Indonesia <span class="top-divider">/</span> Senin–Jumat, 08.00–17.00 WIB</span></div></div><UHeader v-model:open="open" title="PT Alpha Tunas Mandiri" class="site-header" :toggle="{ 'aria-label': open ? 'Tutup menu' : 'Buka menu' }"><template #title><BrandLogo /></template><UNavigationMenu :items="items" aria-label="Navigasi utama"/><template #right><UButton to="/kontak" label="Diskusi Proyek" color="neutral" variant="outline" trailing-icon="i-lucide-arrow-up-right" class="header-cta"/></template><template #body><UNavigationMenu :items="items" orientation="vertical" aria-label="Navigasi seluler"/><UButton to="/kontak" block label="Diskusikan proyek Anda" class="mt-6"/></template></UHeader><main id="main-content" tabindex="-1"><slot/></main><AppFooter/></div></template>

@@ -1,0 +1,9 @@
+<script setup lang="ts">
+const { data: articles } = await useAsyncData('all-articles', () => queryCollection('artikel').order('date', 'DESC').all())
+const search = ref('')
+const category = ref('Semua')
+const categories = computed(() => ['Semua', ...new Set(articles.value?.map(p => p.category))])
+const filtered = computed(() => articles.value?.filter(a => (category.value === 'Semua' || a.category === category.value) && (a.title + ' ' + a.description).toLocaleLowerCase('id').includes(search.value.trim().toLocaleLowerCase('id'))) || [])
+usePageSeo('Artikel & Wawasan', 'Inspirasi dan panduan perencanaan, renovasi, serta koordinasi proyek konstruksi.')
+</script>
+<template><div><PageIntro title="Wawasan untuk langkah yang lebih baik." description="Gagasan, panduan, dan perspektif seputar perencanaan serta pembangunan ruang." eyebrow="Artikel & Wawasan"/><section class="shell section"><div class="article-tools"><div class="filter-row" role="group" aria-label="Kategori artikel"><UButton v-for="item in categories" :key="item" :label="item" :variant="category === item ? 'solid' : 'outline'" :color="category === item ? 'primary' : 'neutral'" :aria-pressed="category === item" @click="category = item"/></div><UInput v-model="search" icon="i-lucide-search" aria-label="Cari artikel" placeholder="Cari artikel..." size="lg"/></div><p class="result-count" role="status">{{ filtered.length }} artikel ditemukan</p><div v-if="filtered.length" class="cards three"><ContentCard v-for="article in filtered" :key="article.path" :item="article"/></div><div v-else class="empty-state"><UIcon name="i-lucide-search"/><h2>Artikel belum ditemukan.</h2><p>Coba kata kunci lain atau lihat semua kategori.</p><UButton label="Reset Pencarian" variant="outline" @click="search = ''; category = 'Semua'"/></div></section><ContactCta/></div></template>

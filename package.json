@@ -1,5 +1,5 @@
 {
-  "name": "antigravity-porto",
+  "name": "alpha-tunas-mandiri",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.28.2",
@@ -8,10 +8,12 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "test:e2e": "playwright test",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.132",
+    "@nuxt/content": "^3.16.1",
     "@nuxt/ui": "^4.11.1",
     "nuxt": "^4.5.2",
     "tailwindcss": "^4.3.3",

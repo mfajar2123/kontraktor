@@ -1,146 +1,84 @@
-# Muhamad Fajar Portfolio
+# PT Alpha Tunas Mandiri
 
-Personal portfolio for Muhamad Fajar, a web application developer focused on full stack development and DevOps.
+Website profil perusahaan konstruksi dalam bahasa Indonesia. Nuxt 4, Nuxt UI 4, Tailwind CSS 4, dan Nuxt Content 3. Palet biru tua, putih hangat, oranye bata, tanpa gradien.
 
-## Technology
+## Menjalankan
 
-- Nuxt 4 and Vue 3
-- Nuxt UI 4 and Tailwind CSS 4
-- Nuxt Image for responsive WebP images
-- Local Lucide icons through Nuxt UI
-- Playwright for browser checks and Lighthouse for performance audits
+Gunakan Node.js 22.19+ atau 24 LTS dan pnpm 10.
 
-## Pages and Features
-
-| Route | Content |
-| --- | --- |
-| `/` | Introduction, capabilities, and experience overview |
-| `/experience` | Work history and responsibilities |
-| `/stack` | Backend, frontend, and DevOps tools |
-| `/about` | Profile, education, and certifications |
-| `/contact` | Project and hiring inquiries, email copy, WhatsApp, and LinkedIn |
-| `/resume` | Resume with print and save-as-PDF support |
-
-The interface uses a dark theme with mint accents, responsive navigation, keyboard focus indicators, and a skip-to-content link. CSS transitions respect reduced-motion preferences. Scrolling uses native browser behavior.
-
-Contact actions open email or messaging applications. The site does not submit inquiries to a backend. The resume uses the browser print dialog to save a PDF.
-
-SEO metadata includes page-specific titles and descriptions, social sharing metadata, and Person structured data. Canonical URLs and absolute social image URLs require a configured production domain.
-
-## Requirements
-
-- Node.js 22.19 or newer in the Node 22 release line, or Node.js 24.11 or newer
-- pnpm 10
-- Google Chrome for the configured Playwright tests
-
-The Docker build uses Node.js 24.
-
-## Local Development
-
-```bash
+```sh
 pnpm install
 pnpm dev
 ```
 
-Open `http://localhost:3000`.
+Buka http://localhost:3000. Untuk produksi statis:
 
-## Environment Configuration
-
-Copy `.env.example` to `.env` and set the public production origin:
-
-```dotenv
-NUXT_PUBLIC_SITE_URL=https://your-domain.com
-```
-
-Replace the example with your actual domain, without a trailing slash. Set this value before generating static files because metadata is included at build time.
-
-## Production
-
-### Static Generation
-
-```bash
+```sh
 pnpm generate
-```
-
-Deploy the contents of `.output/public` to a static host. The six portfolio routes are prerendered.
-
-To inspect the generated site locally:
-
-```bash
 node scripts/serve.mjs
 ```
 
-Open `http://127.0.0.1:4173`. This script is a local preview server.
+Pratinjau statis: http://127.0.0.1:4173. Semua halaman detail yang ditautkan akan dirender saat generate. Nuxt Content memakai konektor SQLite native Node; database konten dibuat otomatis dari file.
 
-### Node Server
+## Halaman
 
-For deployment with server-side rendering:
+- Beranda, Tentang Kami, Layanan & Jasa, Galeri, Kontak, Artikel.
+- Empat detail layanan, enam detail proyek ilustratif, tiga detail artikel.
+- FAQ, kebijakan privasi, dan tampilan kesalahan berbahasa Indonesia.
+- Filter kategori galeri, pencarian dan filter artikel, salin tautan artikel.
+- Formulir kontak empat kolom (nama, telepon, email, pesan), draf email dan salin pesan.
+- Tombol WhatsApp mengambang di halaman kontak dengan pilihan Admin 1 dan Admin 2.
+- Google Maps embed dengan titik dummy Sukabumi, alamat kantor, dan petunjuk arah.
+- Bagian pencapaian dan mitra contoh di beranda.
+- Navigasi seluler, fokus keyboard, tautan lewati konten, dan dukungan reduced motion.
 
-```bash
-pnpm build
-node .output/server/index.mjs
-```
+## Konten dan rencana Decap CMS
 
-### Docker
+Konten dibaca menggunakan queryCollection dan ditampilkan dengan ContentRenderer. Struktur koleksi ada di content.config.ts:
 
-```bash
-docker build --build-arg NUXT_PUBLIC_SITE_URL=https://your-domain.com -t portfolio-app .
-docker run --rm -p 3000:80 portfolio-app
-```
+| Lokasi | Isi |
+| --- | --- |
+| content/perusahaan.json | Identitas, kontak, dua admin, koordinat peta, pencapaian, mitra, proses kerja, FAQ |
+| content/pages/*.md | Pengantar beranda, profil, kebijakan privasi |
+| content/layanan/*.md | Deskripsi dan rincian layanan |
+| content/proyek/*.md | Proyek, kategori, lokasi, tahun, lingkup |
+| content/artikel/*.md | Artikel, tanggal, kategori, waktu baca |
 
-Open `http://localhost:3000`. The multi-stage image generates the static site and serves it through Nginx on container port 80. The Nginx configuration enables gzip and long-lived caching for versioned Nuxt assets.
+Setiap Markdown menggunakan frontmatter biasa dan body Markdown. Ini dapat dipetakan ke folder collections Decap, sedangkan perusahaan.json memakai file collection. Nama file menentukan URL; pertahankan slug saat mengedit. Field wajib mengikuti schema content.config.ts.
 
-## Validation
+Decap CMS belum dipasang. Integrasi selanjutnya membutuhkan pilihan backend Git, autentikasi, branch publikasi, dan konfigurasi media. Simpan media milik perusahaan di public/images/uploads dan gunakan path /images/uploads/nama-file.jpg. Setelah perubahan konten di-commit melalui CMS, jalankan build ulang untuk memperbarui website statis.
 
-Generate the site before running browser checks:
+Teks antarmuka, judul beberapa bagian beranda, navigasi, dan footer masih berada di komponen Vue. Jangan memasukkan kredensial CMS ke runtimeConfig.public.
 
-```bash
+## Kontak
+
+Salin .env.example menjadi .env, lalu isi domain dan kontak resmi jika sudah tersedia:
+
+- NUXT_PUBLIC_SITE_URL: origin produksi tanpa trailing slash.
+- NUXT_PUBLIC_CONTACT_EMAIL: email resmi.
+- NUXT_PUBLIC_WHATSAPP: nomor internasional tanpa tanda +.
+
+Kontak awal terisi dari content/perusahaan.json dengan data dummy: alamat Sukabumi, email berdomain .example, serta dua nomor admin. NUXT_PUBLIC_CONTACT_EMAIL menimpa email; NUXT_PUBLIC_WHATSAPP menimpa telepon utama dan nomor Admin 1. Admin 2 diubah di file konten.
+
+Formulir memvalidasi nama, telepon, email, dan pesan, lalu menampilkan tombol membuka draf email atau menyalin pesan. Tidak ada pengiriman atau penyimpanan di server, dan tidak ada klaim pesan berhasil terkirim. Pilihan admin WhatsApp membuka tab baru dengan salam pembuka tanpa meneruskan isian formulir. Titik peta adalah ilustrasi pusat Kota Sukabumi, bukan lokasi kantor terverifikasi.
+
+## Aset dan data contoh
+
+Foto menggunakan URL images.unsplash.com, dimuat secara eksternal; ketersediaannya bergantung pada penyedia. Daftar URL ada di frontmatter konten serta komponen HeroSection dan halaman beranda/profil. Ganti dengan foto berizin milik perusahaan sebelum publikasi resmi.
+
+Proyek, lokasi, tahun, cakupan layanan, jam operasional, profil, dan artikel merupakan konten rancangan yang perlu persetujuan perusahaan. Angka pencapaian, identitas mitra, alamat, nomor telepon, dan email merupakan data dummy berlabel pada antarmuka. Tidak ada klaim sertifikasi yang telah diverifikasi. Ganti semua data dummy sebelum publikasi resmi.
+
+## Pengujian
+
+```sh
 pnpm generate
-pnpm exec playwright test
+pnpm test:e2e
 ```
 
-Playwright starts the local static preview server when needed. The checks cover desktop and mobile routes, metadata, horizontal overflow, contact actions, mobile navigation, reduced motion, and print styling.
+Playwright memakai Google Chrome yang terpasang dan menguji desktop serta seluler. Cakupan: seluruh halaman, metadata, overflow, filter, pencarian, validasi kontak, clipboard, navigasi, FAQ, reduced motion, seluruh foto beranda, panel dua admin WhatsApp, tautan peta, dan bagian pencapaian. Tangkapan layar disimpan di artifacts/.
 
-To run Lighthouse, start the static preview server in one terminal and run the audit in another:
+## Deploy
 
-```bash
-node scripts/serve.mjs
-```
+Docker menggunakan Node 24 untuk generate dan Nginx untuk menyajikan .output/public. Build langsung di Node juga tersedia melalui pnpm build.
 
-```bash
-pnpm exec lighthouse http://127.0.0.1:4173 --only-categories=performance,accessibility,best-practices,seo --output=html --output-path=./lighthouse-report.html
-```
-
-Performance scores depend on the device, network, hosting, and build. No Lighthouse score is guaranteed by this repository.
-
-## Content and Styling
-
-- `data/portfolio.json`: biography, contact details, work history, skills, education, and certifications.
-- `pages/index.vue`: landing page capabilities and experience summary.
-- `components/HeroSection.vue`: introduction and portrait.
-- `components/ContactCta.vue`: shared contact call to action.
-- `pages/contact.vue`: project and hiring email templates.
-- `assets/css/main.css`: layout, colors, responsive behavior, motion, and print styles.
-- `layouts/default.vue`: header logo and navigation.
-- `public/favicon.ico`: mint favicon matching the header's lowercase f and period.
-
-Some landing page copy is defined directly in Vue components. When updating work history, review both the central JSON file and the landing page summary.
-
-## Project Structure
-
-```text
-assets/css/          Global styles
-components/          Shared page sections
-data/                Portfolio content
-layouts/             Shared navigation and footer layout
-pages/               Application routes
-public/              Images and favicon
-scripts/             Local static preview server
-tests/               Playwright browser checks
-app.vue              Application wrapper and SEO metadata
-app.config.ts        Nuxt UI theme
-nuxt.config.ts       Modules, runtime configuration, and prerender routes
-playwright.config.ts Browser test configuration
-Dockerfile           Static production image
-nginx.conf           Production static server configuration
-```
+Workflow GitHub Pages tetap tersedia. Domain produksi diambil dari repository variable NUXT_PUBLIC_SITE_URL; isi setelah domain perusahaan ditetapkan. Tidak ada deployment yang dilakukan sebagai bagian implementasi lokal.

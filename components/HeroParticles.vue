@@ -58,7 +58,7 @@ onMounted(() => {
       p.x += p.vx * dt
       p.y += p.vy * dt
       const fade = Math.sin(Math.PI * p.life / p.max)
-      ctx!.strokeStyle = `rgba(169,239,198,${fade * 0.55})`
+      ctx!.strokeStyle = `rgba(232,121,66,${fade * 0.55})`
       ctx!.lineWidth = p.size
       ctx!.lineCap = 'round'
       ctx!.beginPath()
@@ -119,7 +119,7 @@ onBeforeUnmount(() => cleanup())
 </template>
 
 <style scoped>
-.hero-particles { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
+.hero-particles { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
 @media (prefers-reduced-motion: reduce), (hover: none), print {
   .hero-particles { display: none; }
 }

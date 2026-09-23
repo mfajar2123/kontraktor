@@ -1,0 +1,1 @@
+<template><span class="brand"><svg width="39" height="42" viewBox="0 0 64 64" aria-hidden="true"><path d="M7 55 28 9h10l21 46H44L33 29 22 55Z" fill="currentColor"/><path d="M27 47h22v8H24Z" fill="#e87942"/></svg><span>ALPHA TUNAS<small>MANDIRI</small></span></span></template>

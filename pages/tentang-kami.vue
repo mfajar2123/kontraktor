@@ -1,0 +1,5 @@
+<script setup lang="ts">
+const { data: page } = await useAsyncData('about-page', () => queryCollection('pages').path('/pages/tentang-kami').first())
+usePageSeo(() => page.value?.title || 'Tentang Kami', () => page.value?.description || '')
+</script>
+<template><div><PageIntro :title="page?.title || 'Tentang Kami'" :description="page?.description" eyebrow="Tentang Kami"/><div class="shell wide-photo"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=85" alt="Ilustrasi kerja sama tim di area konstruksi" width="1400" height="650"/><span>Kolaborasi menjadi fondasi setiap pekerjaan. Foto ilustrasi.</span></div><RevealSection><section class="shell section editorial-layout"><aside><p class="eyebrow">IDENTITAS KAMI</p><h2>Terarah.<br>Terbuka.<br>Bertanggung jawab.</h2><p class="muted">Prinsip sederhana yang menjadi landasan dalam membangun hubungan dan ruang yang bernilai.</p></aside><ContentRenderer v-if="page" :value="page" class="prose-content"/></section></RevealSection><ContactCta/></div></template>
