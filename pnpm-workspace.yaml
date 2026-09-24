@@ -1,5 +1,7 @@
 allowBuilds:
-  '@parcel/watcher': false
-  esbuild: false
-  sharp: false
-  vue-demi: false
+  # Dibutuhkan oleh Nuxt/Vite pada instalasi bersih di CI (termasuk Netlify).
+  # Tetap gunakan allow-list agar build script paket lain tidak otomatis berjalan.
+  '@parcel/watcher': true
+  esbuild: true
+  sharp: true
+  vue-demi: true
