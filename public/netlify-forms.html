@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="id">
+  <head><meta charset="utf-8"><title>Netlify Forms</title></head>
+  <body>
+    <!-- Blueprint statis agar Netlify mendeteksi form Vue/Nuxt saat deploy. -->
+    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="contact">
+      <input type="hidden" name="subject" value="Pesan baru dari formulir website">
+      <p hidden><label>Jangan isi kolom ini: <input name="bot-field"></label></p>
+      <label>Nama <input type="text" name="name"></label>
+      <label>Telepon <input type="tel" name="phone"></label>
+      <label>Email <input type="email" name="email"></label>
+      <label>Pesan <textarea name="message"></textarea></label>
+      <button type="submit">Kirim</button>
+    </form>
+  </body>
+</html>

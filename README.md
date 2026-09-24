@@ -26,7 +26,7 @@ Pratinjau statis: http://127.0.0.1:4173. Semua halaman detail yang ditautkan aka
 - Empat detail layanan, enam detail proyek ilustratif, tiga detail artikel.
 - FAQ, kebijakan privasi, dan tampilan kesalahan berbahasa Indonesia.
 - Filter kategori galeri, pencarian dan filter artikel, salin tautan artikel.
-- Formulir kontak empat kolom (nama, telepon, email, pesan), draf email dan salin pesan.
+- Formulir kontak empat kolom (nama, telepon, email, pesan) dengan pengiriman melalui Netlify Forms.
 - Tombol WhatsApp mengambang di halaman kontak dengan pilihan Admin 1 dan Admin 2.
 - Google Maps embed dengan titik dummy Sukabumi, alamat kantor, dan petunjuk arah.
 - Bagian pencapaian dan mitra contoh di beranda.
@@ -62,6 +62,10 @@ Untuk mengedit, pilih item yang ada agar URL publik tidak berubah; klik **New** 
 
 > Catatan: Netlify menandai Git Gateway sebagai deprecated untuk konfigurasi baru, walau fitur ini masih berjalan. Bila kebijakan Netlify Anda tidak mengizinkannya, ganti `backend` di `public/admin/config.yml` dengan backend OAuth/GitHub yang dikelola sendiri sebelum CMS diaktifkan.
 
+## Formulir kontak Netlify
+
+Halaman Kontak mengirim isian nama, telepon, email, dan pesan ke Netlify Forms dengan nama form `contact`. Blueprint statisnya ada di `public/netlify-forms.html`; jangan menghapus file itu karena Netlify memindainya saat deploy. Setelah push dan deploy berhasil, di Netlify buka **Forms** > **contact** > **Form submission notifications** > **Add notification** > **Email notification**, lalu masukkan `mfajar212345@gmail.com`. Pengiriman email diatur di dashboard Netlify agar alamat penerima tidak terekspos ke pengunjung.
+
 Teks antarmuka, judul beberapa bagian beranda, navigasi, dan footer masih berada di komponen Vue. Jangan memasukkan kredensial CMS ke runtimeConfig.public.
 
 ## Kontak
@@ -74,7 +78,7 @@ Salin .env.example menjadi .env, lalu isi domain dan kontak resmi jika sudah ter
 
 Kontak awal terisi dari content/perusahaan.json dengan data dummy: alamat Sukabumi, email berdomain .example, serta dua nomor admin. NUXT_PUBLIC_CONTACT_EMAIL menimpa email; NUXT_PUBLIC_WHATSAPP menimpa telepon utama dan nomor Admin 1. Admin 2 diubah di file konten.
 
-Formulir memvalidasi nama, telepon, email, dan pesan, lalu menampilkan tombol membuka draf email atau menyalin pesan. Tidak ada pengiriman atau penyimpanan di server, dan tidak ada klaim pesan berhasil terkirim. Pilihan admin WhatsApp membuka tab baru dengan salam pembuka tanpa meneruskan isian formulir. Titik peta adalah ilustrasi pusat Kota Sukabumi, bukan lokasi kantor terverifikasi.
+Formulir memvalidasi nama, telepon, email, dan pesan lalu mengirimkannya melalui Netlify Forms. Submisi tersimpan di dashboard Netlify dan diteruskan sesuai notifikasi yang diatur pengelola website. Pilihan admin WhatsApp membuka tab baru dengan salam pembuka tanpa meneruskan isian formulir. Titik peta adalah ilustrasi pusat Kota Sukabumi, bukan lokasi kantor terverifikasi.
 
 ## Aset dan data contoh
 

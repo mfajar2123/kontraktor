@@ -9,9 +9,9 @@ Website ini merupakan versi demonstrasi profil PT Alpha Tunas Mandiri. Foto, pro
 
 ## Formulir kontak
 
-Formulir kontak memproses nama, nomor telepon, email, dan pesan di browser untuk menyiapkan draf email. Website tidak menyimpan isian formulir ke database atau mengirimnya secara otomatis. Pesan hanya disalin ke clipboard setelah Anda menekan tombol salin.
+Formulir kontak mengirim nama, nomor telepon, email, dan pesan ke Netlify Forms agar tim kami dapat menindaklanjuti pertanyaan Anda. Informasi tersebut tersimpan pada layanan Netlify dan diteruskan ke penerima notifikasi formulir yang ditetapkan oleh pengelola website.
 
-Informasi baru diteruskan ke aplikasi email setelah Anda memilih tombol Buka Aplikasi Email. Tautan WhatsApp pada pilihan admin hanya menyertakan salam pembuka, tanpa isian formulir. Pengiriman pesan tetap memerlukan tindakan Anda di aplikasi tujuan.
+Tautan WhatsApp pada pilihan admin hanya menyertakan salam pembuka, tanpa isian formulir. Jangan kirimkan informasi sensitif melalui formulir atau WhatsApp.
 
 ## Layanan pihak ketiga
 

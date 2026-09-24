@@ -2,9 +2,8 @@
 const config = useRuntimeConfig()
 const { data: company } = await useCompany()
 const state = reactive({ name: '', phone: '', email: '', message: '' })
-const ready = ref(false)
-const copyStatus = ref('')
-const result = ref<HTMLElement>()
+const isSubmitting = ref(false)
+const submitStatus = ref<'idle' | 'success' | 'error'>('idle')
 const email = computed(() => String(config.public.contactEmail || company.value?.contact?.email || 'halo@alphatunasmandiri.example'))
 const phone = computed(() => String(config.public.whatsapp || company.value?.contact?.phone || '+62 812-0000-0001'))
 const mapQuery = computed(() => company.value?.contact?.mapQuery || '-6.9210,106.9270')
@@ -18,17 +17,36 @@ const validate = (value: typeof state) => {
   if (value.message.trim().length < 10) errors.push({ name: 'message', message: 'Tulis pesan minimal 10 karakter.' })
   return errors
 }
-const messageBody = computed(() => ['Halo PT Alpha Tunas Mandiri,', '', state.message.trim(), '', 'Nama: ' + state.name.trim(), 'Telepon: ' + state.phone.trim(), 'Email: ' + state.email.trim()].join('\n'))
-const mailLink = computed(() => 'mailto:' + email.value + '?subject=' + encodeURIComponent('Pesan dari ' + state.name.trim()) + '&body=' + encodeURIComponent(messageBody.value))
-watch(state, () => { ready.value = false; copyStatus.value = '' })
-async function prepareMessage() {
-  ready.value = true
-  await nextTick()
-  result.value?.focus()
-}
-async function copyMessage() {
-  try { await navigator.clipboard.writeText(messageBody.value); copyStatus.value = 'Pesan berhasil disalin.' }
-  catch { copyStatus.value = 'Salin pesan secara manual dari kolom di atas.' }
+watch(state, () => { if (submitStatus.value !== 'idle') submitStatus.value = 'idle' })
+async function submitContact() {
+  isSubmitting.value = true
+  submitStatus.value = 'idle'
+  try {
+    const payload = new URLSearchParams({
+      'form-name': 'contact',
+      subject: 'Pesan baru dari ' + state.name.trim(),
+      'bot-field': '',
+      name: state.name.trim(),
+      phone: state.phone.trim(),
+      email: state.email.trim(),
+      message: state.message.trim()
+    })
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: payload.toString()
+    })
+    if (!response.ok) throw new Error('Netlify Forms tidak menerima pesan.')
+    state.name = ''
+    state.phone = ''
+    state.email = ''
+    state.message = ''
+    submitStatus.value = 'success'
+  } catch {
+    submitStatus.value = 'error'
+  } finally {
+    isSubmitting.value = false
+  }
 }
 usePageSeo('Kontak & Kantor Sukabumi', 'Hubungi PT Alpha Tunas Mandiri di Sukabumi melalui email, telepon, atau WhatsApp untuk kebutuhan konstruksi Anda.')
 </script>
@@ -61,35 +79,31 @@ usePageSeo('Kontak & Kantor Sukabumi', 'Hubungi PT Alpha Tunas Mandiri di Sukabu
         <div class="contact-form-heading"><span class="form-symbol"><UIcon name="i-lucide-send"/></span><span class="eyebrow">PESAN UNTUK KAMI</span></div>
         <h2>Kami senang mendengar<br>dari Anda.</h2>
         <p class="form-note">Isi formulir berikut untuk memulai percakapan. Semua kolom wajib diisi.</p>
-        <UForm :state="state" :validate="validate" class="project-form contact-form" @submit="prepareMessage">
+        <UForm name="contact" method="post" data-netlify="true" :state="state" :validate="validate" class="project-form contact-form" @submit="submitContact">
+          <input type="hidden" name="form-name" value="contact">
           <div class="form-grid">
             <UFormField name="name" label="Nama lengkap" required>
-              <UInput v-model="state.name" placeholder="Nama Anda" autocomplete="name" class="w-full" size="xl" :maxlength="100"/>
+              <UInput v-model="state.name" name="name" placeholder="Nama Anda" autocomplete="name" class="w-full" size="xl" :maxlength="100"/>
               <template #error="{ error }"><span class="field-error">{{ error || '\u00a0' }}</span></template>
             </UFormField>
             <UFormField name="phone" label="Nomor telepon" required>
-              <UInput v-model="state.phone" type="tel" placeholder="08xx xxxx xxxx" autocomplete="tel" class="w-full" size="xl" :maxlength="25"/>
+              <UInput v-model="state.phone" name="phone" type="tel" placeholder="08xx xxxx xxxx" autocomplete="tel" class="w-full" size="xl" :maxlength="25"/>
               <template #error="{ error }"><span class="field-error">{{ error || '\u00a0' }}</span></template>
             </UFormField>
           </div>
           <UFormField name="email" label="Alamat email" required>
-            <UInput v-model="state.email" type="email" placeholder="nama@email.com" autocomplete="email" class="w-full" size="xl" :maxlength="254"/>
+            <UInput v-model="state.email" name="email" type="email" placeholder="nama@email.com" autocomplete="email" class="w-full" size="xl" :maxlength="254"/>
             <template #error="{ error }"><span class="field-error">{{ error || '\u00a0' }}</span></template>
           </UFormField>
           <UFormField name="message" label="Pesan" required>
-            <UTextarea v-model="state.message" placeholder="Apa yang bisa kami bantu? Tuliskan pertanyaan atau kebutuhan Anda di sini." :rows="5" :maxlength="2000" class="w-full" size="xl"/>
+            <UTextarea v-model="state.message" name="message" placeholder="Apa yang bisa kami bantu? Tuliskan pertanyaan atau kebutuhan Anda di sini." :rows="5" :maxlength="2000" class="w-full" size="xl"/>
             <template #error="{ error }"><span class="field-error">{{ error || '\u00a0' }}</span></template>
           </UFormField>
-          <div class="form-submit-row"><UButton type="submit" label="Siapkan Pesan" size="xl" trailing-icon="i-lucide-arrow-up-right"/><span>Langkah selanjutnya:<br>kirim melalui aplikasi email Anda.</span></div>
-          <p class="form-note">Informasi Anda digunakan untuk menyiapkan pesan. Baca <NuxtLink to="/kebijakan-privasi">Kebijakan Privasi</NuxtLink>.</p>
+          <div class="form-submit-row"><UButton type="submit" :label="isSubmitting ? 'Mengirim…' : 'Kirim Pesan'" :loading="isSubmitting" :disabled="isSubmitting" size="xl" trailing-icon="i-lucide-send"/><span>Pesan dikirim aman melalui<br>formulir website kami.</span></div>
+          <p class="form-note">Informasi Anda hanya digunakan untuk menanggapi pertanyaan ini. Baca <NuxtLink to="/kebijakan-privasi">Kebijakan Privasi</NuxtLink>.</p>
         </UForm>
-        <div v-if="ready" ref="result" tabindex="-1" class="summary-panel">
-          <h3>Pesan siap diteruskan.</h3>
-          <p>Website belum mengirim pesan. Buka aplikasi email untuk meninjau dan mengirimnya.</p>
-          <pre>{{ messageBody }}</pre>
-          <div class="actions"><UButton :to="mailLink" label="Buka Aplikasi Email" icon="i-lucide-mail"/><UButton label="Salin Pesan" variant="outline" color="neutral" icon="i-lucide-copy" @click="copyMessage"/></div>
-          <p role="status">{{ copyStatus }}</p>
-        </div>
+        <p v-if="submitStatus === 'success'" class="form-feedback form-feedback-success" role="status">Terima kasih. Pesan Anda sudah terkirim dan tim kami akan segera menindaklanjuti.</p>
+        <p v-else-if="submitStatus === 'error'" class="form-feedback form-feedback-error" role="alert">Pesan belum terkirim. Periksa koneksi Anda, lalu coba kembali beberapa saat lagi.</p>
       </div>
     </section>
 

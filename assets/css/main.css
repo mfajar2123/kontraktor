@@ -294,6 +294,9 @@ em { font-style: normal; color: var(--orange); }
 @media print { .site-header,.topbar,.footer,.cta { display: none; } .section { padding-block: 1rem; } }
 
 .form-submit-row{display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+.form-feedback{margin-top:1.25rem;padding:1rem 1.15rem;border-left:3px solid;font-size:13px;line-height:1.65}
+.form-feedback-success{background:#eef7f1;border-color:#147d49;color:#164a31}
+.form-feedback-error{background:#fff2ed;border-color:var(--orange);color:var(--navy)}
 .dummy-note{color:var(--ui-text-muted);font-size:10px;line-height:1.6;margin-top:1rem}
 .office-section{padding-block:5rem}
 .office-map-grid{display:grid;grid-template-columns:.8fr 1.7fr;background:white;border:1px solid var(--ui-border)}
