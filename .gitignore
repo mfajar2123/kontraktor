@@ -27,3 +27,7 @@ logs
 artifacts/
 test-results/
 playwright-report/
+
+# Decap CMS uploads are versioned website assets, so keep this folder tracked.
+!public/images/
+!public/images/uploads/

@@ -1,0 +1,19 @@
+:root {
+  --atm-navy: #152b3c;
+  --atm-orange: #b94c22;
+  --atm-cream: #f5f4ef;
+}
+
+body { background: var(--atm-cream); font-family: "Segoe UI", Arial, sans-serif; }
+#nc-root { min-height: 100vh; }
+header[class*="AppHeader"] { background: var(--atm-navy) !important; box-shadow: none !important; }
+header[class*="AppHeader"] a, header[class*="AppHeader"] button { color: #fff !important; }
+button[class*="Button"] { border-radius: 3px !important; font-weight: 700 !important; letter-spacing: .01em; }
+button[class*="Button"][class*="Primary"] { background: var(--atm-orange) !important; }
+aside[class*="Sidebar"] { background: var(--atm-navy) !important; }
+aside[class*="Sidebar"] a, aside[class*="Sidebar"] span { color: #dce5eb !important; }
+aside[class*="Sidebar"] a:hover, aside[class*="Sidebar"] a[class*="active"] { background: #213b4e !important; color: #fff !important; }
+main[class*="Main"] { background: #fff !important; }
+input, textarea, select { border-radius: 3px !important; border-color: #cfd7d9 !important; }
+input:focus, textarea:focus, select:focus { border-color: var(--atm-orange) !important; box-shadow: 0 0 0 2px #b94c2230 !important; }
+@media (max-width: 799px) { aside[class*="Sidebar"] { background: var(--atm-navy) !important; } }

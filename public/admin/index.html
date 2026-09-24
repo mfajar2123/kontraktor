@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#152b3c" />
+    <title>Ruang Kelola | PT Alpha Tunas Mandiri</title>
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="stylesheet" href="/admin/admin.css" />
+  </head>
+  <body>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.8.3/dist/decap-cms.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', function (user) {
+          if (!user) window.netlifyIdentity.on('login', function () { window.location.href = '/admin/' })
+        })
+      }
+    </script>
+  </body>
+</html>

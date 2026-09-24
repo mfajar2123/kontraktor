@@ -1,0 +1,148 @@
+backend:
+  name: git-gateway
+  branch: master
+
+# Semua unggahan dari editor disimpan di repository, lalu tersedia di situs
+# statis pada /images/uploads/.
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+site_url: /
+display_url: /
+logo_url: /favicon.svg
+locale: id
+show_preview_links: true
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: '-'
+
+collections:
+  - name: halaman
+    label: Halaman utama
+    label_singular: Halaman
+    description: Ubah teks halaman statis. Nama file dan alamat URL tidak berubah.
+    files:
+      - name: beranda
+        label: Beranda
+        file: content/pages/beranda.md
+        fields: &page_fields
+          - { label: Judul, name: title, widget: string }
+          - { label: Deskripsi SEO, name: description, widget: text, hint: 'Ringkasan yang muncul di hasil pencarian.' }
+          - { label: Isi, name: body, widget: markdown }
+      - name: tentang_kami
+        label: Tentang kami
+        file: content/pages/tentang-kami.md
+        fields: *page_fields
+      - name: kebijakan_privasi
+        label: Kebijakan privasi
+        file: content/pages/kebijakan-privasi.md
+        fields: *page_fields
+
+  - name: layanan
+    label: Layanan
+    label_singular: Layanan
+    folder: content/layanan
+    create: true
+    extension: md
+    format: frontmatter
+    identifier_field: title
+    summary: '{{title}} — {{category}}'
+    slug: '{{slug}}'
+    fields: &service_fields
+      - { label: Judul, name: title, widget: string }
+      - { label: Deskripsi singkat, name: description, widget: text }
+      - { label: Kategori, name: category, widget: string }
+      - { label: Gambar utama, name: image, widget: image, hint: 'Unggah gambar atau masukkan URL gambar yang sudah ada.' }
+      - { label: Teks alternatif gambar, name: imageAlt, widget: string }
+      - { label: Ikon Lucide, name: icon, widget: string, hint: 'Contoh: i-lucide-building-2. Lihat https://lucide.dev/icons/' }
+      - { label: Urutan tampil, name: order, widget: number, value_type: int, min: 0, hint: 'Angka kecil tampil lebih dahulu.' }
+      - { label: Isi, name: body, widget: markdown }
+
+  - name: proyek
+    label: Proyek
+    label_singular: Proyek
+    folder: content/proyek
+    create: true
+    extension: md
+    format: frontmatter
+    identifier_field: title
+    summary: '{{title}} — {{location}}'
+    slug: '{{slug}}'
+    fields:
+      - { label: Judul proyek, name: title, widget: string }
+      - { label: Deskripsi singkat, name: description, widget: text }
+      - { label: Kategori, name: category, widget: string }
+      - { label: Lokasi, name: location, widget: string }
+      - { label: Gambar utama, name: image, widget: image, hint: 'Unggah gambar atau masukkan URL gambar yang sudah ada.' }
+      - { label: Teks alternatif gambar, name: imageAlt, widget: string }
+      - { label: Lingkup pekerjaan, name: scope, widget: string }
+      - { label: Tahun, name: year, widget: string }
+      - { label: Urutan tampil, name: order, widget: number, value_type: int, min: 0 }
+      - { label: Isi, name: body, widget: markdown }
+
+  - name: artikel
+    label: Artikel
+    label_singular: Artikel
+    folder: content/artikel
+    create: true
+    extension: md
+    format: frontmatter
+    identifier_field: title
+    summary: '{{title}} — {{date}}'
+    slug: '{{slug}}'
+    fields:
+      - { label: Judul artikel, name: title, widget: string }
+      - { label: Deskripsi singkat, name: description, widget: text }
+      - { label: Kategori, name: category, widget: string }
+      - { label: Gambar utama, name: image, widget: image, hint: 'Unggah gambar atau masukkan URL gambar yang sudah ada.' }
+      - { label: Teks alternatif gambar, name: imageAlt, widget: string }
+      - { label: Tanggal terbit, name: date, widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' }
+      - { label: Waktu baca, name: readingTime, widget: string, hint: 'Contoh: 4 menit' }
+      - { label: Urutan tampil, name: order, widget: number, value_type: int, min: 0 }
+      - { label: Isi, name: body, widget: markdown }
+
+  - name: perusahaan
+    label: Pengaturan perusahaan
+    label_singular: Pengaturan perusahaan
+    description: Identitas, kontak, proses kerja, dan pertanyaan umum yang dipakai di seluruh situs.
+    files:
+      - name: profil_perusahaan
+        label: Profil & kontak perusahaan
+        file: content/perusahaan.json
+        fields:
+          - { label: Nama perusahaan, name: name, widget: string }
+          - { label: Tagline, name: tagline, widget: text }
+          - { label: Ringkasan, name: intro, widget: text }
+          - { label: Lokasi singkat, name: location, widget: string }
+          - { label: Jam operasional, name: hours, widget: string }
+          - label: Kontak
+            name: contact
+            widget: object
+            fields:
+              - { label: Email, name: email, widget: string }
+              - { label: Telepon utama, name: phone, widget: string }
+              - { label: Alamat, name: address, widget: text }
+              - { label: Titik peta, name: mapQuery, widget: string, hint: 'Contoh koordinat: -6.9210,106.9270' }
+              - label: Admin WhatsApp
+                name: admins
+                widget: list
+                min: 1
+                fields:
+                  - { label: Nama, name: name, widget: string }
+                  - { label: Peran, name: role, widget: string }
+                  - { label: Nomor WhatsApp, name: phone, widget: string, hint: 'Gunakan angka internasional tanpa tanda +.' }
+          - label: Tahapan kerja
+            name: steps
+            widget: list
+            min: 1
+            fields:
+              - { label: Judul, name: title, widget: string }
+              - { label: Penjelasan, name: description, widget: text }
+          - label: FAQ
+            name: faq
+            widget: list
+            min: 1
+            fields:
+              - { label: Pertanyaan, name: label, widget: string }
+              - { label: Jawaban, name: content, widget: text }
