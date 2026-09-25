@@ -22,11 +22,12 @@ Pratinjau statis: http://127.0.0.1:4173. Semua halaman detail yang ditautkan aka
 
 ## Halaman
 
-- Beranda, Tentang Kami, Layanan & Jasa, Galeri, Kontak, Artikel.
+- Beranda, Tentang Kami, Layanan & Jasa, Galeri, Kontak, Karir, Artikel.
 - Empat detail layanan, enam detail proyek ilustratif, tiga detail artikel.
 - FAQ, kebijakan privasi, dan tampilan kesalahan berbahasa Indonesia.
 - Filter kategori galeri, pencarian dan filter artikel, salin tautan artikel.
 - Formulir kontak empat kolom (nama, telepon, email, pesan) dengan pengiriman melalui Netlify Forms.
+- Halaman Karir menampilkan lowongan aktif dari Decap CMS dan formulir lamaran dengan tautan CV.
 - Tombol WhatsApp mengambang di halaman kontak dengan pilihan Admin 1 dan Admin 2.
 - Google Maps embed dengan titik dummy Sukabumi, alamat kantor, dan petunjuk arah.
 - Bagian pencapaian dan mitra contoh di beranda.
@@ -39,7 +40,8 @@ Konten dibaca menggunakan queryCollection dan ditampilkan dengan ContentRenderer
 | Lokasi | Isi |
 | --- | --- |
 | content/perusahaan.json | Identitas, kontak, dua admin, koordinat peta, pencapaian, mitra, proses kerja, FAQ |
-| content/pages/*.md | Pengantar beranda, profil, kebijakan privasi |
+| content/pages/*.md | Pengantar beranda, profil, karir, kebijakan privasi |
+| content/karir/*.md | Lowongan karir dengan status aktif, lokasi, dan jenis pekerjaan |
 | content/layanan/*.md | Deskripsi dan rincian layanan |
 | content/proyek/*.md | Proyek, kategori, lokasi, tahun, lingkup |
 | content/artikel/*.md | Artikel, tanggal, kategori, waktu baca |
@@ -58,13 +60,15 @@ Simpan media milik perusahaan melalui kolom gambar di CMS. Berkas akan masuk ke 
 4. Buka **Identity > Services > Git Gateway**, lalu aktifkan Git Gateway dan batasi role bila tim editor memerlukannya. Pastikan repository terhubung ke GitHub.com atau GitLab.com dan domain kustom sudah HTTPS sebelum mengaktifkannya.
 5. Undang editor melalui **Identity > Invite users**. Editor membuka `https://domain-anda/admin/`, menerima undangan, login, lalu memilih koleksi yang ingin diubah.
 
-Untuk mengedit, pilih item yang ada agar URL publik tidak berubah; klik **New** hanya saat benar-benar membuat layanan/proyek/artikel baru. Isi teks alternatif setiap gambar, gunakan urutan tampil dari angka terkecil, lalu klik **Publish**. Tunggu status deploy Netlify selesai sebelum mengecek situs publik.
+Untuk mengedit, pilih item yang ada agar URL publik tidak berubah; klik **New** saat membuat layanan, proyek, artikel, atau lowongan karir baru. Tandai lowongan yang siap menerima lamaran sebagai aktif dan gunakan urutan tampil dari angka terkecil. Isi teks alternatif setiap gambar, lalu klik **Publish**. Tunggu status deploy Netlify selesai sebelum mengecek situs publik.
 
 > Catatan: Netlify menandai Git Gateway sebagai deprecated untuk konfigurasi baru, walau fitur ini masih berjalan. Bila kebijakan Netlify Anda tidak mengizinkannya, ganti `backend` di `public/admin/config.yml` dengan backend OAuth/GitHub yang dikelola sendiri sebelum CMS diaktifkan.
 
-## Formulir kontak Netlify
+## Formulir Netlify
 
-Halaman Kontak mengirim isian nama, telepon, email, dan pesan ke Netlify Forms dengan nama form `contact`. Blueprint statisnya ada di `public/netlify-forms.html`; jangan menghapus file itu karena Netlify memindainya saat deploy. Setelah push dan deploy berhasil, di Netlify buka **Forms** > **contact** > **Form submission notifications** > **Add notification** > **Email notification**, lalu masukkan `mfajar212345@gmail.com`. Pengiriman email diatur di dashboard Netlify agar alamat penerima tidak terekspos ke pengunjung.
+Halaman Kontak mengirim isian nama, telepon, email, dan pesan ke Netlify Forms dengan nama form `contact`. Halaman Karir mengirim isian nama, telepon, email, posisi, tautan CV, pesan pengantar, dan persetujuan privasi dengan nama form `career`. Keduanya mengirim field `subject` tersembunyi untuk subjek email notifikasi, serta memakai honeypot Netlify. Blueprint statis kedua form ada di `public/netlify-forms.html`; jangan menghapus file itu karena Netlify memindainya saat deploy.
+
+Setelah deploy, atur notifikasi Gmail untuk masing-masing form di **Forms** > pilih `contact` atau `career` > **Submission notifications** > **Add notification** > **Email notification**. Alamat penerima saat ini `mfajar212345@gmail.com`. Subjek notifikasi mengikuti field `subject` dari form. Form `career` hanya tampil ketika ada lowongan aktif. Pelamar memasukkan tautan CV yang dapat dibuka oleh penerima.
 
 Teks antarmuka, judul beberapa bagian beranda, navigasi, dan footer masih berada di komponen Vue. Jangan memasukkan kredensial CMS ke runtimeConfig.public.
 

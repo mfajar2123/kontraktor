@@ -5,13 +5,26 @@
     <!-- Blueprint statis agar Netlify mendeteksi form Vue/Nuxt saat deploy. -->
     <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="contact">
-      <input type="hidden" name="subject" value="Pesan baru dari formulir website">
+      <input type="hidden" name="subject" value="Pesan kontak website — baru">
       <p hidden><label>Jangan isi kolom ini: <input name="bot-field"></label></p>
       <label>Nama <input type="text" name="name"></label>
       <label>Telepon <input type="tel" name="phone"></label>
       <label>Email <input type="email" name="email"></label>
       <label>Pesan <textarea name="message"></textarea></label>
       <button type="submit">Kirim</button>
+    </form>
+    <form name="career" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="career">
+      <input type="hidden" name="subject" value="Lamaran karir — posisi — nama">
+      <p hidden><label>Jangan isi kolom ini: <input name="bot-field"></label></p>
+      <label>Nama lengkap <input type="text" name="name"></label>
+      <label>Email <input type="email" name="email"></label>
+      <label>Telepon <input type="tel" name="phone"></label>
+      <label>Posisi <input type="text" name="position"></label>
+      <label>Tautan CV <input type="url" name="cvUrl"></label>
+      <label>Pesan <textarea name="message"></textarea></label>
+      <label>Persetujuan privasi <input type="text" name="privacy"></label>
+      <button type="submit">Kirim lamaran</button>
     </form>
   </body>
 </html>

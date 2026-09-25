@@ -4,6 +4,7 @@ const { data: company } = await useCompany()
 const state = reactive({ name: '', phone: '', email: '', message: '' })
 const isSubmitting = ref(false)
 const submitStatus = ref<'idle' | 'success' | 'error'>('idle')
+const subject = computed(() => 'Pesan kontak website — ' + (state.name.trim() || 'baru'))
 const email = computed(() => String(config.public.contactEmail || company.value?.contact?.email || 'halo@alphatunasmandiri.example'))
 const phone = computed(() => String(config.public.whatsapp || company.value?.contact?.phone || '+62 812-0000-0001'))
 const mapQuery = computed(() => company.value?.contact?.mapQuery || '-6.9210,106.9270')
@@ -24,7 +25,7 @@ async function submitContact() {
   try {
     const payload = new URLSearchParams({
       'form-name': 'contact',
-      subject: 'Pesan baru dari ' + state.name.trim(),
+      subject: subject.value,
       'bot-field': '',
       name: state.name.trim(),
       phone: state.phone.trim(),
@@ -53,34 +54,33 @@ usePageSeo('Kontak & Kantor Sukabumi', 'Hubungi PT Alpha Tunas Mandiri di Sukabu
 
 <template>
   <div>
-    <PageIntro title="Mari mulai percakapan yang berarti." description="Untuk rencana baru, peluang kerja sama, atau sekadar bertanya. Tim kami siap mendengarkan Anda." eyebrow="Kontak"/>
+    <PageIntro title="Mari mulai percakapan." description="Diskusikan kebutuhan proyek Anda bersama tim kami." eyebrow="Kontak"/>
     <section class="shell section contact-layout contact-refresh">
-      <aside>
-        <p class="eyebrow">TERHUBUNG DENGAN KAMI</p>
-        <h2>Dari Sukabumi,<br>untuk rencana Anda.</h2>
-        <p class="muted">Pilih cara yang paling nyaman untuk terhubung. Kami melayani pertanyaan dan konsultasi pada jam operasional kantor.</p>
-        <div class="contact-info">
-          <UIcon name="i-lucide-phone"/>
-          <div><h3>Telepon & WhatsApp</h3><a :href="'tel:' + phone.replace(/[^+\d]/g, '')">{{ phone }}</a><p>Pilih admin melalui tombol WhatsApp di kanan bawah.</p></div>
+      <aside class="contact-aside">
+        <div class="contact-photo">
+          <img src="https://images.unsplash.com/photo-1743819336189-71deffe7835b?auto=format&fit=crop&fm=jpg&q=80&w=640" srcset="https://images.unsplash.com/photo-1743819336189-71deffe7835b?auto=format&fit=crop&fm=jpg&q=80&w=480 480w, https://images.unsplash.com/photo-1743819336189-71deffe7835b?auto=format&fit=crop&fm=jpg&q=80&w=640 640w, https://images.unsplash.com/photo-1743819336189-71deffe7835b?auto=format&fit=crop&fm=jpg&q=80&w=960 960w" sizes="(max-width: 767px) calc(100vw - 2.5rem), 34vw" alt="Pekerja di area konstruksi gedung bertingkat" width="1200" height="900" fetchpriority="high" decoding="async">
+          <span>Foto ilustrasi konstruksi</span>
         </div>
-        <div class="contact-info">
-          <UIcon name="i-lucide-mail"/>
-          <div><h3>Email Perusahaan</h3><a :href="'mailto:' + email">{{ email }}</a><p>Informasi layanan dan peluang kerja sama.</p></div>
+        <div class="contact-aside-body">
+          <p class="eyebrow">HUBUNGI KAMI</p>
+          <h2>Mulai dari satu pesan.</h2>
+          <div class="contact-channels">
+            <a :href="'tel:' + phone.replace(/[^+\d]/g, '')" class="contact-channel"><UIcon name="i-lucide-phone"/><span><small>Telepon & WhatsApp</small><strong>{{ phone }}</strong></span></a>
+            <a :href="'mailto:' + email" class="contact-channel"><UIcon name="i-lucide-mail"/><span><small>Email perusahaan</small><strong>{{ email }}</strong></span></a>
+          </div>
+          <a href="#lokasi-kantor" class="text-link">Lihat kantor Sukabumi <UIcon name="i-lucide-arrow-down"/></a>
+          <p class="contact-hours"><UIcon name="i-lucide-clock-3"/> {{ company?.hours }}</p>
         </div>
-        <div class="contact-info">
-          <UIcon name="i-lucide-map-pin"/>
-          <div><h3>Kantor Sukabumi</h3><p>{{ company?.contact?.address }}</p><a href="#lokasi-kantor" class="text-link">Lihat Lokasi Kantor <UIcon name="i-lucide-arrow-down"/></a></div>
-        </div>
-        <div class="office-hours"><UIcon name="i-lucide-clock-3"/><div><strong>Jam Operasional</strong><p>{{ company?.hours }}</p><small>Sabtu, Minggu & hari libur: tutup</small></div></div>
-        <p class="dummy-note">Alamat, email, dan nomor telepon merupakan data dummy untuk pratinjau website.</p>
       </aside>
 
       <div class="contact-panel">
         <div class="contact-form-heading"><span class="form-symbol"><UIcon name="i-lucide-send"/></span><span class="eyebrow">PESAN UNTUK KAMI</span></div>
-        <h2>Kami senang mendengar<br>dari Anda.</h2>
-        <p class="form-note">Isi formulir berikut untuk memulai percakapan. Semua kolom wajib diisi.</p>
-        <UForm name="contact" method="post" data-netlify="true" :state="state" :validate="validate" class="project-form contact-form" @submit="submitContact">
+        <h2>Kirim pesan Anda.</h2>
+        <p class="form-note">Semua kolom wajib diisi.</p>
+        <UForm name="contact" method="post" data-netlify="true" netlify-honeypot="bot-field" :state="state" :validate="validate" class="project-form contact-form" @submit="submitContact">
           <input type="hidden" name="form-name" value="contact">
+          <input type="hidden" name="subject" :value="subject">
+          <input type="hidden" name="bot-field" value="">
           <div class="form-grid">
             <UFormField name="name" label="Nama lengkap" required>
               <UInput v-model="state.name" name="name" placeholder="Nama Anda" autocomplete="name" class="w-full" size="xl" :maxlength="100"/>
@@ -99,8 +99,8 @@ usePageSeo('Kontak & Kantor Sukabumi', 'Hubungi PT Alpha Tunas Mandiri di Sukabu
             <UTextarea v-model="state.message" name="message" placeholder="Apa yang bisa kami bantu? Tuliskan pertanyaan atau kebutuhan Anda di sini." :rows="5" :maxlength="2000" class="w-full" size="xl"/>
             <template #error="{ error }"><span class="field-error">{{ error || '\u00a0' }}</span></template>
           </UFormField>
-          <div class="form-submit-row"><UButton type="submit" :label="isSubmitting ? 'Mengirim…' : 'Kirim Pesan'" :loading="isSubmitting" :disabled="isSubmitting" size="xl" trailing-icon="i-lucide-send"/><span>Pesan dikirim aman melalui<br>formulir website kami.</span></div>
-          <p class="form-note">Informasi Anda hanya digunakan untuk menanggapi pertanyaan ini. Baca <NuxtLink to="/kebijakan-privasi">Kebijakan Privasi</NuxtLink>.</p>
+          <div class="form-submit-row"><UButton type="submit" :label="isSubmitting ? 'Mengirim…' : 'Kirim Pesan'" :loading="isSubmitting" :disabled="isSubmitting" size="xl" trailing-icon="i-lucide-send"/><span>Kami membalas pada jam kerja.</span></div>
+          <p class="form-note">Dengan mengirim, Anda menyetujui <NuxtLink to="/kebijakan-privasi">Kebijakan Privasi</NuxtLink>.</p>
         </UForm>
         <p v-if="submitStatus === 'success'" class="form-feedback form-feedback-success" role="status">Terima kasih. Pesan Anda sudah terkirim dan tim kami akan segera menindaklanjuti.</p>
         <p v-else-if="submitStatus === 'error'" class="form-feedback form-feedback-error" role="alert">Pesan belum terkirim. Periksa koneksi Anda, lalu coba kembali beberapa saat lagi.</p>
@@ -109,15 +109,14 @@ usePageSeo('Kontak & Kantor Sukabumi', 'Hubungi PT Alpha Tunas Mandiri di Sukabu
 
     <section id="lokasi-kantor" class="office-section surface">
       <div class="shell">
-        <div class="section-heading"><div><p class="eyebrow">TEMUKAN KAMI</p><h2>Singgah dan bicarakan<br>rencana Anda.</h2></div><p>Atur waktu kunjungan bersama tim kami<br>agar percakapan Anda lebih nyaman.</p></div>
+        <div class="section-heading"><div><p class="eyebrow">KANTOR SUKABUMI</p><h2>Temukan kami.</h2></div><p>{{ company?.hours }}</p></div>
         <div class="office-map-grid">
           <div class="office-card">
             <span class="office-card-icon"><UIcon name="i-lucide-building-2"/></span>
-            <p class="eyebrow">KANTOR SUKABUMI</p><h3>PT Alpha Tunas Mandiri</h3>
+            <p class="eyebrow">PT ALPHA TUNAS MANDIRI</p><h3>Kantor Sukabumi</h3>
             <p>{{ company?.contact?.address }}</p>
             <div class="office-card-hours"><UIcon name="i-lucide-clock-3"/><span>{{ company?.hours }}</span></div>
             <UButton :to="directions" target="_blank" rel="noopener noreferrer" label="Petunjuk Arah" trailing-icon="i-lucide-arrow-up-right" size="lg"/>
-            <small>Titik peta merupakan lokasi ilustratif di pusat Kota Sukabumi, bukan lokasi kantor terverifikasi.</small>
           </div>
           <iframe :src="mapUrl" title="Peta lokasi kantor dummy di Sukabumi" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen class="office-map"/>
         </div>

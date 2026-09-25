@@ -38,6 +38,29 @@ collections:
         label: Kebijakan privasi
         file: content/pages/kebijakan-privasi.md
         fields: *page_fields
+      - name: karir
+        label: Pengantar karir
+        file: content/pages/karir.md
+        fields: *page_fields
+
+  - name: karir
+    label: Lowongan karir
+    label_singular: Lowongan
+    folder: content/karir
+    create: true
+    extension: md
+    format: frontmatter
+    identifier_field: title
+    summary: '{{title}} — {{location}}'
+    slug: '{{slug}}'
+    fields:
+      - { label: Jabatan, name: title, widget: string }
+      - { label: Ringkasan, name: description, widget: text }
+      - { label: Lokasi kerja, name: location, widget: string }
+      - { label: Jenis pekerjaan, name: employmentType, widget: string, hint: 'Contoh: Penuh waktu, kontrak, atau magang.' }
+      - { label: Urutan tampil, name: order, widget: number, value_type: int, min: 0 }
+      - { label: Lowongan aktif, name: active, widget: boolean, default: true }
+      - { label: Rincian lowongan, name: body, widget: markdown }
 
   - name: layanan
     label: Layanan

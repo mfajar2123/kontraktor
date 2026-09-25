@@ -21,7 +21,6 @@
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "@nuxt/image": "^2.0.0",
     "@playwright/test": "^1.63.0",
     "lighthouse": "^13.4.1"
   }

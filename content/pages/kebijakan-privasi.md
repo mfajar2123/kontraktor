@@ -11,6 +11,10 @@ Website ini merupakan versi demonstrasi profil PT Alpha Tunas Mandiri. Foto, pro
 
 Formulir kontak mengirim nama, nomor telepon, email, dan pesan ke Netlify Forms agar tim kami dapat menindaklanjuti pertanyaan Anda. Informasi tersebut tersimpan pada layanan Netlify dan diteruskan ke penerima notifikasi formulir yang ditetapkan oleh pengelola website.
 
+## Formulir karir
+
+Formulir karir mengirim nama, nomor telepon, email, posisi yang dilamar, tautan CV, dan pesan ke Netlify Forms agar tim kami dapat meninjau lamaran. Pelamar bertanggung jawab memastikan tautan CV dapat dibuka oleh tim penerima. Informasi lamaran tersimpan pada layanan Netlify dan diteruskan melalui notifikasi formulir yang diatur pengelola website.
+
 Tautan WhatsApp pada pilihan admin hanya menyertakan salam pembuka, tanpa isian formulir. Jangan kirimkan informasi sensitif melalui formulir atau WhatsApp.
 
 ## Layanan pihak ketiga
