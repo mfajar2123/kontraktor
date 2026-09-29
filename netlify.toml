@@ -5,10 +5,26 @@
 [build.environment]
   NODE_VERSION = "22"
 
+[build.processing.html]
+  pretty_urls = false
+
+# Serve the flat prerendered page without changing the address bar.
+[[redirects]]
+  from = "/karir"
+  to = "/karir.html"
+  status = 200
+  force = true
+
 [[headers]]
   for = "/_nuxt/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/_ipx/*"
+  [headers.values]
+    Content-Type = "image/webp"
+    Cache-Control = "public, max-age=86400"
 
 [[headers]]
   for = "/admin/*"

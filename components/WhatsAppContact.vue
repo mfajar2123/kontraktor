@@ -2,6 +2,7 @@
 const { data: company } = await useCompany()
 const config = useRuntimeConfig()
 const open = ref(false)
+const activated = ref(false)
 const admins = computed(() => company.value?.contact.admins.map((admin, index) => ({
   ...admin,
   phone: index === 0 && config.public.whatsapp ? String(config.public.whatsapp).replace(/\D/g, '') : admin.phone
@@ -11,7 +12,7 @@ const message = 'Halo PT Alpha Tunas Mandiri, saya ingin mendapatkan informasi m
 
 <template>
   <div class="whatsapp-float">
-    <UPopover v-model:open="open" :content="{ side: 'top', align: 'end', sideOffset: 14, collisionPadding: 16, 'aria-label': 'Pilih admin WhatsApp' }">
+    <LazyUPopover v-if="activated" v-model:open="open" :content="{ side: 'top', align: 'end', sideOffset: 14, collisionPadding: 16, 'aria-label': 'Pilih admin WhatsApp' }">
       <button type="button" class="whatsapp-trigger" aria-label="Hubungi melalui WhatsApp" :aria-expanded="open">
         <WhatsAppIcon/><span class="whatsapp-trigger-label">Hubungi Kami</span>
         <UIcon :name="open ? 'i-lucide-chevron-down' : 'i-lucide-chevron-up'" class="whatsapp-chevron"/>
@@ -38,6 +39,10 @@ const message = 'Halo PT Alpha Tunas Mandiri, saya ingin mendapatkan informasi m
           </div>
         </div>
       </template>
-    </UPopover>
+    </LazyUPopover>
+    <button v-else type="button" class="whatsapp-trigger" aria-label="Hubungi melalui WhatsApp" aria-expanded="false" @click="activated = true; open = true">
+      <WhatsAppIcon/><span class="whatsapp-trigger-label">Hubungi Kami</span>
+      <UIcon name="i-lucide-chevron-up" class="whatsapp-chevron"/>
+    </button>
   </div>
 </template>

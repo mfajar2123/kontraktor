@@ -1,6 +1,13 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 @source "../../content/**/*";
+/* Nuxt UI scans srcDir (the repository root); never scan generated previews. */
+@source not "../../.nuxt";
+@source not "../../.output";
+@source not "../../dist";
+@source not "../../artifacts";
+@source not "../../test-results";
+@source not "../../public/admin";
 @theme { --font-sans: "Segoe UI", Arial, sans-serif; }
 :root, .light, .dark {
   --navy: #152b3c; --navy-soft: #213b4e; --orange: #b94c22; --cream: #f5f4ef;
@@ -215,12 +222,11 @@ em { font-style: normal; color: var(--orange); }
  .principles span:not(.eyebrow) { animation: toolkit-wave 3s ease-in-out infinite; }
  .principles span:nth-child(3) { animation-delay: -.5s; }
  .principles span:nth-child(4) { animation-delay: -1s; }
- @keyframes settle-in { from { opacity: .4; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+ @keyframes settle-in { from { transform: translateY(12px); } to { transform: translateY(0); } }
  @keyframes toolkit-wave { 0%,100% { transform: translateY(-3px); } 50% { transform: translateY(3px); } }
 }
 @media (max-width: 1100px) {
  .shell { width: calc(100% - 4rem); }
- .header-cta { display: none; }
  .about-preview,.editorial-layout,.contact-layout { gap: 3rem; }
  .hero h1 { font-size: 5.2rem; }
  .hero-content > p:not(.eyebrow) { max-width: 320px; }
@@ -314,7 +320,7 @@ em { font-style: normal; color: var(--orange); }
 .career-heading{display:flex;align-items:end;justify-content:space-between;gap:3rem;margin-bottom:2.5rem}
 .career-heading h2{font-size:clamp(2rem,3.3vw,3.2rem)}
 .career-heading>.muted{max-width:420px;font-size:14px}
-.career-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem}
+.career-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,28rem),1fr));gap:1.5rem}
 .career-card{display:flex;flex-direction:column;align-items:flex-start;padding:2rem;border:1px solid var(--ui-border);border-top:3px solid var(--orange);background:#fafaf8}
 .career-card-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;width:100%;margin-bottom:1.7rem}
 .career-icon{display:grid;place-items:center;width:48px;height:48px;flex-shrink:0;background:#ede8df;color:var(--orange);font-size:23px}
@@ -336,15 +342,24 @@ em { font-style: normal; color: var(--orange); }
 .career-empty h2{font-size:clamp(1.7rem,3vw,2.4rem)}
 .career-empty p:not(.eyebrow){margin-top:.6rem;color:var(--ui-text-muted);font-size:13px}
 .career-application{padding-block:6rem}
-.career-application-grid{display:grid;grid-template-columns:.85fr 1.3fr;gap:5rem;align-items:start}
+.career-application-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.3fr);gap:4rem;align-items:start}
+.career-application-grid>*{min-width:0}
 .career-application-grid aside{position:sticky;top:8rem}
 .career-application-grid aside h2{font-size:clamp(2rem,3vw,3rem)}
 .career-application-grid aside>p:not(.eyebrow){margin-top:1.2rem;font-size:14px}
 .career-assurance{display:flex;align-items:flex-start;gap:.7rem;margin-top:2rem;padding:1rem;background:white;border-left:2px solid var(--orange);font-size:11px;color:var(--ui-text-muted)}
-.career-assurance>span{flex-shrink:0;color:var(--orange);font-size:18px}
+.career-assurance>.iconify{flex-shrink:0;color:var(--orange);font-size:18px}
+.career-assurance>span:not(.iconify){min-width:0;overflow-wrap:anywhere}
 .career-assurance a{color:var(--navy);text-decoration:underline}
 .career-form-panel{border-top:3px solid var(--orange);background:#fafaf8}
-.career-form{gap:.7rem}
+.career-form{gap:1.25rem}
+.career-form .form-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
+.career-form [data-slot=root]{min-width:0}
+.career-form .field-error{min-height:0}
+.career-form-panel .form-submit-row{display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
+.career-form-panel .form-submit-row button{min-height:48px}
+.career-form [role=combobox]{background:white;min-height:44px}
+.career-form input:not([type=hidden]),.career-form textarea{font-size:16px}
 .career-form input,.career-form textarea{background:white}
 .career-form [role=checkbox]{min-width:22px;min-height:22px}
 html{scroll-padding-top:8rem}
@@ -377,6 +392,7 @@ html{scroll-padding-top:8rem}
 .whatsapp-admin>:last-child{margin-left:auto;color:#147d49;flex-shrink:0}
 .whatsapp-hours{display:flex;align-items:center;gap:.5rem;font-size:10px;color:var(--ui-text-muted);margin-top:1.25rem}
 @media(max-width:1023px){
+.header-cta{display:none}
 .office-map-grid{grid-template-columns:1fr 1.3fr}
 .contact-refresh{gap:2.5rem}
 .career-application-grid{gap:2.5rem}
@@ -400,6 +416,7 @@ html{scroll-padding-top:8rem}
 .career-application-grid aside{position:static}
 .career-application{padding-block:4rem}
 .career-form-panel{padding:1.5rem}
+.career-form .form-grid{grid-template-columns:1fr}
 .office-map-grid{grid-template-columns:1fr}
 .office-card{padding:1.5rem}
 .office-map{min-height:320px;height:320px}

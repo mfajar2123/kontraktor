@@ -4,7 +4,7 @@ Website profil perusahaan konstruksi dalam bahasa Indonesia. Nuxt 4, Nuxt UI 4, 
 
 ## Menjalankan
 
-Gunakan Node.js 22.19+ atau 24 LTS dan pnpm 10.
+Gunakan Node.js 22.19+ atau 24 LTS dan versi pnpm pada field `packageManager` di `package.json` (melalui Corepack).
 
 ```sh
 pnpm install
@@ -86,7 +86,7 @@ Formulir memvalidasi nama, telepon, email, dan pesan lalu mengirimkannya melalui
 
 ## Aset dan data contoh
 
-Foto menggunakan URL images.unsplash.com, dimuat secara eksternal; ketersediaannya bergantung pada penyedia. Daftar URL ada di frontmatter konten serta komponen HeroSection dan halaman beranda/profil. Ganti dengan foto berizin milik perusahaan sebelum publikasi resmi.
+Seluruh foto menggunakan Nuxt Image. Saat `pnpm generate`, IPX mengunduh sumber Unsplash dan menghasilkan WebP responsif di `/_ipx/`; pengunjung menerima gambar statis dari situs sendiri. Build memerlukan akses ke Unsplash. Alias `/unsplash` menjaga nama berkas hasil optimasi tetap valid di Windows. Gambar unggahan CMS dari `/images/uploads/` juga diproses oleh Nuxt Image. Domain eksternal lain perlu ditambahkan ke `image.domains` sebelum dioptimalkan. Ganti foto ilustrasi dengan foto berizin milik perusahaan sebelum publikasi resmi.
 
 Proyek, lokasi, tahun, cakupan layanan, jam operasional, profil, dan artikel merupakan konten rancangan yang perlu persetujuan perusahaan. Angka pencapaian, identitas mitra, alamat, nomor telepon, dan email merupakan data dummy berlabel pada antarmuka. Tidak ada klaim sertifikasi yang telah diverifikasi. Ganti semua data dummy sebelum publikasi resmi.
 
@@ -97,9 +97,15 @@ pnpm generate
 pnpm test:e2e
 ```
 
-Playwright memakai Google Chrome yang terpasang dan menguji desktop serta seluler. Cakupan: seluruh halaman, metadata, overflow, filter, pencarian, validasi kontak, clipboard, navigasi, FAQ, reduced motion, seluruh foto beranda, panel dua admin WhatsApp, tautan peta, dan bagian pencapaian. Tangkapan layar disimpan di artifacts/.
+Playwright memakai Google Chrome yang terpasang dan menguji desktop serta seluler. Cakupan: seluruh halaman, metadata, overflow, filter, pencarian, validasi dan pengiriman form kontak/karir, navigasi termasuk tablet 1024px, fokus keyboard, FAQ, reduced motion, foto beranda, panel dua admin WhatsApp, dan tautan peta. Lowongan pengujian hanya dimasukkan ke payload browser, bukan konten CMS yang dipublikasikan. Tangkapan layar disimpan di artifacts/.
 
 ## Deploy
+
+Halaman dirender sebagai berkas datar (`karir.html`) dan Pretty URLs dinonaktifkan di `netlify.toml` agar `/karir` tidak dialihkan ke `/karir/`. Rewrite 200 melayani halaman karir tanpa mengubah address bar. Setelah deploy, periksa `curl -I https://domain/karir`: hasil yang diharapkan adalah 200 tanpa header Location. Jangan menambahkan redirect 301 dari `/karir/` ke `/karir`, karena Netlify menyamakan kedua pola dan dapat membuat loop.
+
+Untuk audit Lighthouse mobile pada build produksi, jalankan `node scripts/serve.mjs`, kemudian di terminal lain `node scripts/audit-performance.mjs`. Laporan JSON beranda, karir, dan kontak disimpan di `artifacts/`. Server pratinjau memakai gzip sebagaimana hosting produksi. Hasil lokal perlu diuji ulang pada URL publik setelah deploy; latensi hosting dan skrip pihak ketiga dapat memengaruhi skor.
+
+Periksa juga `warnings` pada hasil audit. Peringatan CPU mesin pengujian yang terlalu lambat membuat angka lokal tidak langsung sebanding dengan PageSpeed Insights. Gunakan pengaturan mobile standar dan audit ulang URL deploy pada lingkungan pengujian yang konsisten sebelum menyatakan target 90+ tercapai.
 
 Docker menggunakan Node 24 untuk generate dan Nginx untuk menyajikan .output/public. Build langsung di Node juga tersedia melalui pnpm build. Untuk Netlify, konfigurasi siap pakai berada di `netlify.toml` dan menggunakan `pnpm generate` agar situs dipublikasikan statis.
 

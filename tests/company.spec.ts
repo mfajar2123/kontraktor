@@ -40,11 +40,18 @@ test('pencarian artikel, hasil kosong, dan reset', async ({ page }) => {
 })
 test('formulir kontak empat kolom tervalidasi dan dikirim ke Netlify Forms', async ({ page }) => {
   await page.goto('/kontak')
-  await expect(page.locator('.contact-form input')).toHaveCount(3)
+  await expect(page.locator('.contact-form input:not([type="hidden"])')).toHaveCount(3)
   await expect(page.locator('.contact-form textarea')).toHaveCount(1)
+  // Scroll as a user would: the below-fold form is enabled after it hydrates.
+  await page.getByRole('button', { name: 'Kirim Pesan', exact: true }).scrollIntoViewIfNeeded()
   await page.getByRole('button', { name: 'Kirim Pesan', exact: true }).click()
   await expect(page.getByText('Masukkan nama minimal 2 karakter.')).toBeVisible()
   await expect(page.getByText('Masukkan nomor telepon yang valid (8–15 digit).')).toBeVisible()
+  expect(await page.locator('.contact-form').evaluate(form =>
+    [...form.querySelectorAll('[aria-describedby]')].every(input =>
+      input.getAttribute('aria-describedby')!.split(/\s+/).every(id => !!document.getElementById(id))
+    )
+  )).toBe(true)
   await page.getByRole('textbox', { name: 'Nama lengkap' }).fill('Budi Santoso')
   await page.getByRole('textbox', { name: 'Nomor telepon' }).fill('081234567890')
   await page.getByRole('textbox', { name: 'Alamat email' }).fill('budi@example.com')
@@ -109,7 +116,9 @@ test('navigasi seluler, FAQ, dan gerak minimum', async ({ page, isMobile }) => {
     await expect(page.getByRole('dialog')).toBeVisible()
     await page.keyboard.press('Escape')
     await expect(page.getByRole('dialog')).not.toBeVisible()
+    await expect(page.getByRole('button', { name: 'Buka menu' })).toBeFocused()
     await page.getByRole('button', { name: 'Buka menu' }).click()
+    await page.getByRole('dialog').getByRole('button', { name: 'Perusahaan' }).click()
     await page.getByRole('dialog').getByRole('link', { name: 'Tentang Kami', exact: true }).click()
     await expect(page).toHaveURL(/tentang-kami$/)
     await expect(page.getByRole('dialog')).not.toBeVisible()
