@@ -1,8 +1,9 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 @source "../../content/**/*";
-/* Nuxt UI scans srcDir (the repository root); never scan generated previews. */
-@source not "../../.nuxt";
+/* Nuxt UI emits component classes in .nuxt/ui; exclude only its build output. */
+@source not "../../.nuxt/dist";
+@source not "../../.nuxt/dev";
 @source not "../../.output";
 @source not "../../dist";
 @source not "../../artifacts";

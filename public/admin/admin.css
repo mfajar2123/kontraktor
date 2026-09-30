@@ -1,70 +1,182 @@
-/* Decap CMS — tema editorial PT Alpha Tunas Mandiri.
-   Palet ini memakai pasangan teks/latar berkontras tinggi agar label dan
-   bantuan form tidak hilang pada permukaan putih maupun navy. */
-:root {
+/* Visual theme for the pinned Decap CMS 3.8.3 admin only. */
+.decap-admin {
   --atm-navy: #152b3c;
-  --atm-navy-soft: #213b4e;
   --atm-orange: #b94c22;
-  --atm-orange-hover: #963c1a;
-  --atm-cream: #f5f4ef;
-  --atm-surface: #ffffff;
   --atm-text: #1d303d;
   --atm-muted: #50616b;
-  --atm-border: #c6d0d3;
-  --atm-focus: #a6411c;
-  --atm-success: #146c43;
-  --atm-danger: #a62d22;
+  --atm-border: #d4dde2;
+  min-height: 100vh;
+  color: var(--atm-text);
+  background: #f3f5f7;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+.decap-admin #nc-root { min-height: 100vh; color: var(--atm-text); }
+
+/* Header controls get their own contrast; dropdowns keep light surfaces. */
+.decap-admin #nc-root header[class*="AppHeader"] {
+  background: var(--atm-navy) !important;
+  border-bottom: 3px solid var(--atm-orange);
+  box-shadow: 0 3px 16px #152b3c20;
+}
+.decap-admin #nc-root [class*="AppHeaderContent"] { gap: 16px; }
+.decap-admin #nc-root :is([class*="AppHeaderNavList"], [class*="AppHeaderActions"]) {
+  gap: 8px;
+  align-items: center;
+}
+.decap-admin #nc-root :is([class*="AppHeaderButton"], [class*="AppHeaderQuickNewButton"], [class*="AvatarDropdownButton"]) {
+  color: #fff !important;
+  background: #ffffff0d !important;
+  border: 1px solid #ffffff38 !important;
+  border-radius: 8px !important;
+  min-height: 40px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.decap-admin #nc-root :is([class*="AppHeaderButton"], [class*="AvatarDropdownButton"]):hover,
+.decap-admin #nc-root [class*="AppHeaderNavLink"].header-link-active {
+  color: #fff !important;
+  background: #ffffff20 !important;
+  border-color: #ffffff70 !important;
+}
+.decap-admin #nc-root [class*="AppHeaderQuickNewButton"] {
+  background: var(--atm-orange) !important;
+  border-color: #dc805b !important;
+}
+.decap-admin #nc-root [class*="AppHeaderQuickNewButton"]:hover { background: #963c1a !important; }
+.decap-admin #nc-root :is([class*="AppHeaderSiteLink"], [class*="AppHeaderTestRepoIndicator"]) {
+  color: #e0eaf0 !important;
+}
+.decap-admin #nc-root [class*="AvatarPlaceholderIcon"] {
+  color: var(--atm-navy) !important;
+  background: #e6edf2 !important;
+  border-radius: 50%;
 }
 
-html, body { min-height: 100%; background: var(--atm-cream); }
-body { color: var(--atm-text); font-family: "Segoe UI", Arial, sans-serif; font-size: 15px; line-height: 1.55; }
-#nc-root { min-height: 100vh; color: var(--atm-text); background: var(--atm-cream); }
+/* Collections sidebar and current selection. */
+.decap-admin #nc-root [class*="SidebarContainer"] {
+  background: #fff !important;
+  border: 1px solid var(--atm-border) !important;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px #152b3c08;
+}
+.decap-admin #nc-root [class*="SidebarHeading"] {
+  color: var(--atm-navy) !important;
+  font-size: 20px;
+  font-weight: 700;
+}
+.decap-admin #nc-root [class*="SidebarNavList"] { padding: 0 10px; }
+.decap-admin #nc-root [class*="SidebarNavLink"] {
+  color: var(--atm-muted) !important;
+  border-left: 3px solid transparent !important;
+  border-radius: 7px;
+  margin: 4px 0;
+  padding: 11px 12px;
+}
+.decap-admin #nc-root [class*="SidebarNavLink"]:hover {
+  color: var(--atm-navy) !important;
+  background: #eef3f6 !important;
+}
+.decap-admin #nc-root [class*="SidebarNavLink"].sidebar-active {
+  color: #8b3518 !important;
+  background: #fff0e8 !important;
+  border-left-color: var(--atm-orange) !important;
+  font-weight: 700;
+}
 
-/* Header dan navigasi: teks terang pada navy memiliki kontras tinggi. */
-header[class*="AppHeader"] { background: var(--atm-navy) !important; border-bottom: 3px solid var(--atm-orange) !important; box-shadow: 0 3px 18px #1024332b !important; }
-header[class*="AppHeader"] :is(a, button, span, svg) { color: #fff !important; fill: currentColor; }
-header[class*="AppHeader"] a:hover, header[class*="AppHeader"] button:hover { background: #ffffff1f !important; }
-aside[class*="Sidebar"] { background: var(--atm-navy) !important; border-right: 1px solid #304a5b !important; }
-aside[class*="Sidebar"] :is(a, span, p, svg) { color: #eaf0f3 !important; fill: currentColor; }
-aside[class*="Sidebar"] a { border-radius: 4px; margin: 3px 8px; }
-aside[class*="Sidebar"] a:hover, aside[class*="Sidebar"] a:focus-visible, aside[class*="Sidebar"] a[class*="active"] { background: var(--atm-orange) !important; color: #fff !important; }
+/* Content listing and primary create action. */
+.decap-admin #nc-root :is([class*="CollectionTopContainer"], [class*="ListCard"], [class*="GridCard"]) {
+  border-radius: 12px;
+  border-color: var(--atm-border) !important;
+}
+.decap-admin #nc-root [class*="CollectionTopContainer"] {
+  background: #fff !important;
+  box-shadow: 0 4px 16px #152b3c08;
+}
+.decap-admin #nc-root :is([class*="CollectionTopHeading"], [class*="ListCardTitle"], [class*="CardHeading"]) {
+  color: var(--atm-navy) !important;
+}
+.decap-admin #nc-root [class*="CollectionTopDescription"] { color: var(--atm-muted) !important; }
+.decap-admin #nc-root :is([class*="ListCardLink"], [class*="GridCardLink"]):hover {
+  background: #f6f9fb !important;
+}
+.decap-admin #nc-root [class*="CollectionTopNewButton"] {
+  color: #fff !important;
+  background: var(--atm-orange) !important;
+  border-radius: 8px;
+}
+.decap-admin #nc-root [class*="CollectionTopNewButton"]:hover { background: #963c1a !important; }
 
-/* Area kerja dan daftar konten. */
-main[class*="Main"], main, [class*="CollectionContainer"], [class*="EntryCollection"], [class*="EditorContainer"] { background: var(--atm-surface) !important; color: var(--atm-text) !important; }
-#nc-root main :is(h1, h2, h3, h4, label, legend) { color: var(--atm-navy) !important; font-weight: 700; }
-#nc-root main :is(p, small, [class*="hint"], [class*="Hint"], [class*="description"], [class*="Description"]) { color: var(--atm-muted) !important; }
-#nc-root main a { color: #8b3518 !important; font-weight: 600; }
-#nc-root main a:hover { color: var(--atm-orange-hover) !important; text-decoration: underline; }
+/* Menus opened from the header must remain readable on white. */
+.decap-admin #nc-root [class*="DropdownList"] {
+  color: var(--atm-text) !important;
+  background: #fff !important;
+  border: 1px solid var(--atm-border) !important;
+  border-radius: 10px;
+  box-shadow: 0 12px 32px #152b3c24 !important;
+  padding: 6px;
+}
+.decap-admin #nc-root [class*="DropdownList"] :is(a, button, li, span) {
+  color: var(--atm-text) !important;
+}
+.decap-admin #nc-root [class*="DropdownList"] :is(a, button, li):hover { background: #eef3f6 !important; }
+.decap-admin #nc-root [class*="StyledModal"] {
+  color: var(--atm-text);
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 20px 64px #152b3c33;
+}
 
-/* Field form: jangan bergantung pada warna default Decap yang bisa berubah. */
-#nc-root :is(input, textarea, select) { color: var(--atm-text) !important; background: #fff !important; border: 1px solid var(--atm-border) !important; border-radius: 4px !important; box-shadow: none !important; }
-#nc-root :is(input, textarea, select)::placeholder { color: #667882 !important; opacity: 1; }
-#nc-root :is(input, textarea, select):hover { border-color: #8fa0a6 !important; }
-#nc-root :is(input, textarea, select):focus { border-color: var(--atm-focus) !important; box-shadow: 0 0 0 3px #b94c2230 !important; outline: 0 !important; }
-#nc-root :is(button, a, input, textarea, select):focus-visible { outline: 3px solid #f0a27f !important; outline-offset: 2px; }
-
-/* Aksi utama dan sekunder — label selalu eksplisit, termasuk pada hover. */
-button[class*="Button"] { min-height: 38px; border-radius: 4px !important; font-weight: 700 !important; letter-spacing: .01em; transition: background .15s ease, border-color .15s ease, color .15s ease; }
-button[class*="Button"][class*="Primary"], button[class*="Button"][class*="primary"] { color: #fff !important; background: var(--atm-orange) !important; border-color: var(--atm-orange) !important; }
-button[class*="Button"][class*="Primary"]:hover, button[class*="Button"][class*="primary"]:hover { color: #fff !important; background: var(--atm-orange-hover) !important; border-color: var(--atm-orange-hover) !important; }
-button[class*="Button"]:not([class*="Primary"]):not([class*="primary"]) { color: var(--atm-navy) !important; background: #fff !important; border-color: var(--atm-border) !important; }
-button[class*="Button"]:not([class*="Primary"]):not([class*="primary"]):hover { color: var(--atm-navy) !important; background: #f0f3f3 !important; border-color: #8fa0a6 !important; }
-button[class*="Button"][class*="Delete"], button[class*="Button"][class*="delete"] { color: #fff !important; background: var(--atm-danger) !important; border-color: var(--atm-danger) !important; }
-
-/* Kartu, toolbar, modal, menu, dan notifikasi memakai permukaan yang tegas. */
-#nc-root [class*="Card"], #nc-root [class*="Toolbar"], #nc-root [role="dialog"], #nc-root [role="menu"], #nc-root [class*="Popover"] { color: var(--atm-text) !important; background: #fff !important; border-color: var(--atm-border) !important; box-shadow: 0 8px 28px #1024331f; }
-#nc-root [role="dialog"] :is(h1, h2, h3, label, p, span) { color: var(--atm-text) !important; }
-#nc-root [class*="error"], #nc-root [class*="Error"] { color: var(--atm-danger) !important; }
-#nc-root [class*="success"], #nc-root [class*="Success"] { color: var(--atm-success) !important; }
-/* Menang atas warna teks modal agar label tombol selalu mengikuti tombolnya. */
-button[class*="Button"] :is(span, svg) { color: inherit !important; fill: currentColor; }
-
-/* Editor Markdown dan media library tetap terbaca pada surface gelap/terang. */
-#nc-root [contenteditable="true"], #nc-root .CodeMirror, #nc-root .CodeMirror-scroll { color: var(--atm-text) !important; background: #fff !important; }
-#nc-root .CodeMirror-gutters { background: #edf1f1 !important; border-right-color: var(--atm-border) !important; }
+/* Preserve Decap's primary, danger and disabled button states. */
+.decap-admin #nc-root :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select) {
+  color: var(--atm-text) !important;
+  background: #fff !important;
+  border-color: #b8c6cf !important;
+  border-radius: 6px;
+}
+.decap-admin #nc-root :is(input, textarea)::placeholder { color: #617480 !important; opacity: 1; }
+.decap-admin #nc-root :is(input, textarea, select):focus { border-color: var(--atm-orange) !important; }
+.decap-admin #nc-root :is(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 3px solid #dc805b !important;
+  outline-offset: 3px;
+}
+.decap-admin #nc-root :is([contenteditable="true"], .CodeMirror) {
+  color: var(--atm-text);
+  background: #fff;
+}
+.decap-admin #nc-root .CodeMirror-gutters {
+  background: #f1f4f6;
+  border-right-color: var(--atm-border);
+}
 
 @media (max-width: 799px) {
-  body { font-size: 16px; }
-  aside[class*="Sidebar"] { background: var(--atm-navy) !important; }
-  button[class*="Button"] { min-height: 42px; }
+  .decap-admin #nc-root [class*="AppMainContainer"] { min-width: 0; }
+  .decap-admin #nc-root header[class*="AppHeader"] { height: auto !important; }
+  .decap-admin #nc-root [class*="AppHeaderContent"] {
+    min-width: 0;
+    gap: 8px;
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px;
+  }
+  .decap-admin #nc-root [class*="AppHeaderNavList"] { flex-shrink: 0; }
+  .decap-admin #nc-root [class*="AppHeaderActions"] { flex-wrap: wrap; gap: 8px; }
+  .decap-admin #nc-root :is([class*="AppHeaderButton"], [class*="AppHeaderQuickNewButton"], [class*="AvatarDropdownButton"]) {
+    min-height: 44px;
+  }
+  .decap-admin #nc-root [class*="AppHeaderSiteLink"] {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .decap-admin #nc-root [class*="CollectionTopRow"] { gap: 12px; flex-wrap: wrap; }
+  .decap-admin #nc-root [class*="CollectionContainer"] { margin: 16px 12px; }
+  .decap-admin #nc-root [class*="SidebarContainer"] {
+    position: relative;
+    width: 100%;
+    max-height: none;
+    margin-bottom: 16px;
+  }
+  .decap-admin #nc-root [class*="CollectionMain"] { padding-left: 0; }
+  .decap-admin #nc-root [class*="PaginationMessage"] { width: 100%; }
 }
